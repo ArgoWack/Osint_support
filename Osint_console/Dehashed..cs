@@ -28,7 +28,6 @@ namespace Osint_console
 
             client.DefaultRequestHeaders.UserAgent.ParseAdd(myApiName + "/Version");
             client.DefaultRequestHeaders.Accept.ParseAdd("application / json");
-            //\" -H \"Accept: application/json\"
 
             // prepares the request
             string url = $"{BaseUrl}?query={Uri.EscapeDataString(email)}";
@@ -41,7 +40,7 @@ namespace Osint_console
                     string content = await response.Content.ReadAsStringAsync();
 
                     //WriteLine(content);
-
+                    
                     var dehashedResponse = JsonSerializer.Deserialize<DehashedResponse>(content);
 
                     if (dehashedResponse?.Entries != null && dehashedResponse.Entries.Any())
@@ -49,7 +48,7 @@ namespace Osint_console
                         WriteLine($"Leak information for {email}:");
                         foreach (var entry in dehashedResponse.Entries)
                         {
-                            WriteLine($"ID: {entry.Id}, Email: {entry.Email}, Leak: {entry.Name}, Date: {entry.BreachDate}");
+                          WriteLine($"ID: {entry.Id}, Email: {entry.Email}, Ip_address: {entry.Ip_address}, Username: {entry.Username},Password: {entry.Password}, Hashed_password: {entry.Hashed_password}, Hash_type: {entry.Hash_type}, Name: {entry.Name},Vin: {entry.Vin}, Address: {entry.Address}, Phone: {entry.Phone}, Database_name: {entry.Database_name}");
                         }
                     }
                     else
@@ -79,17 +78,43 @@ namespace Osint_console
 
         public class Entry
         {
+            // Fields: id, email, ip_address, username, password, hashed_password, hash_type, name, vin, address, phone, database_name
+
             [JsonPropertyName("id")]
             public string Id { get; set; }
 
             [JsonPropertyName("email")]
             public string Email { get; set; }
 
+            [JsonPropertyName("ip_address")]
+            public string Ip_address { get; set; }
+
+            [JsonPropertyName("username")]
+            public string Username { get; set; }
+
+            [JsonPropertyName("password")]
+            public string Password { get; set; }
+
+            [JsonPropertyName("hashed_password")]
+            public string Hashed_password { get; set; }
+
+            [JsonPropertyName("hash_type")]
+            public string Hash_type { get; set; }
+
             [JsonPropertyName("name")]
             public string Name { get; set; }
 
-            [JsonPropertyName("breach_date")]
-            public string BreachDate { get; set; }
+            [JsonPropertyName("vin")]
+            public string Vin { get; set; }
+
+            [JsonPropertyName("address")]
+            public string Address { get; set; }
+
+            [JsonPropertyName("phone")]
+            public string Phone { get; set; }
+
+            [JsonPropertyName("database_name")]
+            public string Database_name { get; set; }
         }
     }
 }
