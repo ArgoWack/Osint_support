@@ -16,10 +16,8 @@ namespace Osint_console
 {
     public class HaveIBeenPwned
     {
-        public static async Task CheckIfEmailHasBeenPwned(string email, string hibp_ApiKey)
+        public static async Task CheckIfEmailHasBeenPwned(string email, string hibp_ApiKey, string myApiName)
         {
-            //some name of my api for identification purposes
-            string myApiName = "EngineeringDegreeInOsint";
 
             // API documentation: https://haveibeenpwned.com/API/v3
 
