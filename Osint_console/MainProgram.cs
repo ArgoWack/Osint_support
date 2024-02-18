@@ -52,7 +52,24 @@ class MainProgram
 
     static async Task Main(string[] args)
     {
-    
+
+        var dehashed = new Dehashed();
+        var haveIBeenPwned = new HaveIBeenPwned();
+
+        var aggregatedData = new AggregatedData();
+
+        /*
+        //Extracts data from methods below into main program
+
+        aggregatedData.LeakDetails.AddRange(dehashed.CheckIfEmailHasBeenLeaked());
+
+        aggregatedData.PwnedPasswordHashes.AddRange(haveIBeenPwned.CheckIfPasswordHasBeenPwned());
+
+        aggregatedData.EmailBreaches.AddRange(haveIBeenPwned.CheckIfEmailHasBeenPwnedBreaches());
+        aggregatedData.EmailPastes.AddRange(haveIBeenPwned.CheckIfEmailHasBeenPwnedPastes());
+
+        */
+
         //Example of password to test:
         //qwerty1
         //asdfzxc
@@ -76,18 +93,55 @@ class MainProgram
         string dehashedApiUsername = Environment.GetEnvironmentVariable("dehashedApiUsername");
         string dehashedApiKey = Environment.GetEnvironmentVariable("dehashedApiKey");
 
-        await Dehashed.CheckIfEmailHasBeenLeaked(email, dehashedApiUsername, dehashedApiKey, apiName);
+        //await Dehashed.CheckIfEmailHasBeenLeaked(email, dehashedApiUsername, dehashedApiKey, apiName);
 
 
         //haveibeenpwned block:
 
-        /*
+        
         string hibp_ApiKey = Environment.GetEnvironmentVariable("hibp_ApiKey");
 
         await HaveIBeenPwned.CheckIfPasswordHasBeenPwned(password);
         Thread.Sleep(6000);
 
         await HaveIBeenPwned.CheckIfEmailHasBeenPwned(email, hibp_ApiKey, apiName);
-        */
+        
+    }
+
+    public class LeakDataDehashed
+    {
+        public string Id { get; set; }
+        public string Email { get; set; }
+        public string IpAddress { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string HashedPassword { get; set; }
+        public string HashType { get; set; }
+        public string Name { get; set; }
+        public string Vin { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
+        public string DatabaseName { get; set; }
+    }
+
+    public class BreachDataHaveibeenpwned
+    {
+        public string Name { get; set; }
+        public string Date { get; set; }
+    }
+
+    public class PasteDataHaveibeenpwned
+    {
+        public string Source { get; set; }
+        public string Date { get; set; }
+        public string Id { get; set; }
+    }
+
+    public class AggregatedData
+    {
+        public List<LeakDataDehashed> LeakDetails { get; set; } = new List<LeakDataDehashed>();
+        public List<string> PwnedPasswordHashes { get; set; } = new List<string>();
+        public List<BreachDataHaveibeenpwned> EmailBreaches { get; set; } = new List<BreachDataHaveibeenpwned>();
+        public List<PasteDataHaveibeenpwned> EmailPastes { get; set; } = new List<PasteDataHaveibeenpwned>();
     }
 }

@@ -156,6 +156,7 @@ namespace Osint_console
                         if (content.Contains(hashSuffix))
                         {
                             WriteLine("Password: " + password + " has been pwned!");
+                            WriteLine(content);
                         }
                         else
                         {
