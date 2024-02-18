@@ -14,6 +14,7 @@ using dotenv.net;
 using Osint_console;
 
 using System.Diagnostics;
+using System.Collections;
 
 class MainProgram
 {
@@ -53,20 +54,10 @@ class MainProgram
     static async Task Main(string[] args)
     {
 
-        var dehashed = new Dehashed();
-        var haveIBeenPwned = new HaveIBeenPwned();
-
-        var aggregatedData = new AggregatedData();
-
         /*
         //Extracts data from methods below into main program
 
         aggregatedData.LeakDetails.AddRange(dehashed.CheckIfEmailHasBeenLeaked());
-
-        aggregatedData.PwnedPasswordHashes.AddRange(haveIBeenPwned.CheckIfPasswordHasBeenPwned());
-
-        aggregatedData.EmailBreaches.AddRange(haveIBeenPwned.CheckIfEmailHasBeenPwnedBreaches());
-        aggregatedData.EmailPastes.AddRange(haveIBeenPwned.CheckIfEmailHasBeenPwnedPastes());
 
         */
 
@@ -88,7 +79,10 @@ class MainProgram
         //name of my api for identification purposes
         string apiName = Environment.GetEnvironmentVariable("myApiName");
 
+        var aggregatedData = new AggregatedData();
+
         //Dehashed block:
+        var dehashed = new Dehashed();
 
         string dehashedApiUsername = Environment.GetEnvironmentVariable("dehashedApiUsername");
         string dehashedApiKey = Environment.GetEnvironmentVariable("dehashedApiKey");
@@ -96,16 +90,58 @@ class MainProgram
         //await Dehashed.CheckIfEmailHasBeenLeaked(email, dehashedApiUsername, dehashedApiKey, apiName);
 
 
+
         //haveibeenpwned block:
 
-        
-        string hibp_ApiKey = Environment.GetEnvironmentVariable("hibp_ApiKey");
+        var haveIBeenPwned = new HaveIBeenPwned();
 
-        await HaveIBeenPwned.CheckIfPasswordHasBeenPwned(password);
+        var pwnedHashes = await HaveIBeenPwned.CheckIfPasswordHasBeenPwned(password);
+
+        if (pwnedHashes.Any())
+        {
+            WriteLine("Pwned Password Hashes:");
+            foreach (var hash in pwnedHashes)
+            {
+                WriteLine(hash);
+            }
+        }
+        else
+        {
+            WriteLine("No pwned passwords found.");
+        }
+        aggregatedData.PwnedPasswordHashes.AddRange(pwnedHashes);
+
         Thread.Sleep(6000);
 
-        await HaveIBeenPwned.CheckIfEmailHasBeenPwned(email, hibp_ApiKey, apiName);
-        
+        string hibp_ApiKey = Environment.GetEnvironmentVariable("hibp_ApiKey");
+
+        var (breaches, pastes) = await HaveIBeenPwned.CheckIfEmailHasBeenPwned(email, hibp_ApiKey, apiName);
+
+        if (breaches.Any())
+        {
+            WriteLine("\n Breaches:");
+            foreach (var breach in breaches)
+            {
+                WriteLine($"Name: {breach.Name}, Date: {breach.BreachDate}");
+            }
+        }
+        else
+        {
+            WriteLine("\n No breaches found for this email.");
+        }
+
+        if (pastes.Any())
+        {
+            WriteLine("\n Pastes:");
+            foreach (var paste in pastes)
+            {
+                WriteLine($"Source: {paste.Source}, Date: {paste.Date}, ID: {paste.Id}");
+            }
+        }
+        else
+        {
+            WriteLine("\n No pastes found for this email.");
+        }
     }
 
     public class LeakDataDehashed
@@ -127,7 +163,7 @@ class MainProgram
     public class BreachDataHaveibeenpwned
     {
         public string Name { get; set; }
-        public string Date { get; set; }
+        public string BreachDate { get; set; }
     }
 
     public class PasteDataHaveibeenpwned

@@ -16,20 +16,23 @@ namespace Osint_console
 {
     public class HaveIBeenPwned
     {
-        public static async Task CheckIfEmailHasBeenPwned(string email, string hibp_ApiKey, string myApiName)
-        {
 
+        public static async Task<(List<Breach>, List<Paste>)> CheckIfEmailHasBeenPwned(string email, string hibp_ApiKey, string myApiName)
+        {
             // API documentation: https://haveibeenpwned.com/API/v3
 
-            await CheckBreaches(email, myApiName, hibp_ApiKey);
-            // Required 6s delay between API calls for cheapest API key
-            Thread.Sleep(6000);
-            await CheckPastes(email, myApiName, hibp_ApiKey);
+            var breaches = await CheckBreaches(email, myApiName, hibp_ApiKey);
+            // Respect API delay requirements
+            await Task.Delay(6000);
+            var pastes = await CheckPastes(email, myApiName, hibp_ApiKey);
+
+            return (breaches, pastes);
         }
 
-        public static async Task CheckBreaches(string email, string myApiName, string apiKey)
+        public static async Task<List<Breach>> CheckBreaches(string email, string myApiName, string apiKey)
         {
-            WriteLine("\n");
+            List<Breach> breachDataList = new List<Breach>();
+
             //specyfying kinds of data for API request
             // 'breachedaccount' checks if an account has been breached
             string service = "breachedaccount";
@@ -51,19 +54,12 @@ namespace Osint_console
                     HttpResponseMessage response = await client.GetAsync(url);
                     if (response.IsSuccessStatusCode)
                     {
-                        // Reading and deserializing the JSON response into a list of Breach objects.
-                        // reads json file and deserializes into a string
                         string content = await response.Content.ReadAsStringAsync();
                         var breaches = JsonSerializer.Deserialize<Breach[]>(content);
-                        // converts string data into a list and sorts it from the most recent breaches to oldests
-                        var sortedBreaches = breaches.OrderBy(b => b.BreachDateTime).ToList();
-                        sortedBreaches.Reverse();
-
-                        // outputs data to console
-                        WriteLine($"Breach information for {email}:");
-                        foreach (var breach in sortedBreaches)
+                        if (breaches != null)
                         {
-                            WriteLine($"Name: {breach.Name}, Date: {breach.BreachDate}");
+                            breachDataList.AddRange(breaches);
+                            breachDataList = breaches.OrderByDescending(b => b.BreachDate).ToList();
                         }
                     }
                     else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -83,11 +79,12 @@ namespace Osint_console
                     WriteLine($"Error fetching data: {e.Message}");
                 }
             }
+            return breachDataList;
         }
 
-        public static async Task CheckPastes(string email, string myApiName, string apiKey)
+        public static async Task<List<Paste>> CheckPastes(string email, string myApiName, string apiKey)
         {
-            WriteLine("\n");
+            List<Paste> pasteDataList = new List<Paste>();
 
             string service = "pasteaccount";
             string parameter = Uri.EscapeDataString(email);
@@ -105,14 +102,10 @@ namespace Osint_console
                     {
                         string content = await response.Content.ReadAsStringAsync();
                         var pastes = JsonSerializer.Deserialize<Paste[]>(content);
-
-                        var sortedPastes = pastes.OrderBy(b => b.Date).ToList();
-                        sortedPastes.Reverse();
-
-                        WriteLine($"Paste information for {email}:");
-                        foreach (var paste in sortedPastes)
+                        if (pastes != null)
                         {
-                            WriteLine($"Source: {paste.Source}, Date: {paste.Date}, ID: {paste.Id}");
+                            pasteDataList.AddRange(pastes);
+                            pasteDataList = pastes.OrderByDescending(p => p.Date).ToList();
                         }
                     }
                     else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -129,18 +122,17 @@ namespace Osint_console
                     WriteLine($"Error fetching paste data: {e.Message}");
                 }
             }
+            return pasteDataList;
         }
-
-        public static async Task CheckIfPasswordHasBeenPwned(string password)
+        public static async Task<List<string>> CheckIfPasswordHasBeenPwned(string password)
         {
+            List<string> pwnedHashes = new List<string>();
+
             // converts password to SHA-1 hash
             string sha1Password = GetSha1Hash(password);
 
             // takes first 5 characters to send to api
             string hashPrefix = sha1Password.Substring(0, 5);
-
-            // checks the rest of the hash against the response
-            string hashSuffix = sha1Password.Substring(5).ToUpper();
 
             // api url
             string url = $"https://api.pwnedpasswords.com/range/{hashPrefix}";
@@ -153,14 +145,20 @@ namespace Osint_console
                     if (response.IsSuccessStatusCode)
                     {
                         string content = await response.Content.ReadAsStringAsync();
-                        if (content.Contains(hashSuffix))
+
+                        // splits each line in response
+                        foreach (var line in content.Split('\n'))
                         {
-                            WriteLine("Password: " + password + " has been pwned!");
-                            WriteLine(content);
-                        }
-                        else
-                        {
-                            WriteLine("Password has not been pwned.");
+                            var parts = line.Split(':');
+                            if (parts.Length == 2)
+                            {
+                                var hashSuffix = parts[0].Trim();
+
+                                if (hashSuffix.Equals(sha1Password.Substring(5), StringComparison.OrdinalIgnoreCase))
+                                {
+                                    pwnedHashes.Add(hashPrefix + hashSuffix);
+                                }
+                            }
                         }
                     }
                     else
@@ -173,6 +171,8 @@ namespace Osint_console
                     WriteLine($"Error fetching data: {e.Message}");
                 }
             }
+
+            return pwnedHashes;
         }
 
         public static string GetSha1Hash(string input)
