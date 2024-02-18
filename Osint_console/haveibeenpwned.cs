@@ -16,7 +16,6 @@ namespace Osint_console
 {
     public class HaveIBeenPwned
     {
-
         public static async Task<(List<Breach>, List<Paste>)> CheckIfEmailHasBeenPwned(string email, string hibp_ApiKey, string myApiName)
         {
             // API documentation: https://haveibeenpwned.com/API/v3
@@ -171,10 +170,8 @@ namespace Osint_console
                     WriteLine($"Error fetching data: {e.Message}");
                 }
             }
-
             return pwnedHashes;
         }
-
         public static string GetSha1Hash(string input)
         {
             using (SHA1Managed sha1 = new SHA1Managed())
@@ -191,8 +188,6 @@ namespace Osint_console
                 return sb.ToString();
             }
         }
-
-
         public class Breach
         {
             // properties which are going to be retrieved from breachdata in form of json with the same names
@@ -201,7 +196,6 @@ namespace Osint_console
             // helper property to convert BreachDate string to a DateTime object for easier sorting
             public DateTime BreachDateTime => DateTime.Parse(BreachDate);
         }
-
         public class Paste
         {
             public string Source { get; set; }
@@ -210,4 +204,3 @@ namespace Osint_console
         }
     }
 }
-

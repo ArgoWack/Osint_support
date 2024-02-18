@@ -12,10 +12,11 @@ using System.Security.Cryptography;
 using System.Text;
 using dotenv.net;
 using Osint_console;
-
 using System.Diagnostics;
 using System.Collections;
+using static Osint_console.Dehashed;
 using static Osint_console.HaveIBeenPwned;
+
 
 class MainProgram
 {
@@ -69,6 +70,23 @@ class MainProgram
     }
     static async Task Main(string[] args)
     {
+        //Possible future user input data:
+        string dummyEmail = "";
+        string dummyId = "";
+        string dummyIpAddress = "";
+        string dummyUsername = "";
+        string dummyPassword = "";
+        string dummyHashedPassword = "";
+        string dummyHashType = "";
+        string dummyNameName = "";
+        string dummyVin = "";
+        string dummyAddress = "";
+        string dummyPhone = "";
+        string dummyDatabaseName = "";
+
+        string dummyBreachDate = "";
+
+
         //Example of password to test:
         //qwerty1
         //asdfzxc
@@ -90,27 +108,19 @@ class MainProgram
         var aggregatedData = new AggregatedData();
 
         //Dehashed block:
-        var dehashed = new Dehashed();
-
         string dehashedApiUsername = Environment.GetEnvironmentVariable("dehashedApiUsername");
         string dehashedApiKey = Environment.GetEnvironmentVariable("dehashedApiKey");
 
         var leakedEntries = await Dehashed.CheckIfEmailHasBeenLeaked(email, dehashedApiUsername, dehashedApiKey, apiName);
 
         //haveibeenpwned block:
-
-        var haveIBeenPwned = new HaveIBeenPwned();
-
         var pwnedHashes = await HaveIBeenPwned.CheckIfPasswordHasBeenPwned(password);
-
         aggregatedData.PwnedPasswordHashes.AddRange(pwnedHashes);
-
         Thread.Sleep(6000);
-
         string hibp_ApiKey = Environment.GetEnvironmentVariable("hibp_ApiKey");
-
         var (breaches, pastes) = await HaveIBeenPwned.CheckIfEmailHasBeenPwned(email, hibp_ApiKey, apiName);
 
+        //Printing results to console
         PrintExistingData(leakedEntries, email, pwnedHashes, breaches, pastes);
     }
 

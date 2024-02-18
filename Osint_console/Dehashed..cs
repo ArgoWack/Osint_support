@@ -13,7 +13,6 @@ namespace Osint_console
 {
     public class Dehashed
     {
-
         //https://www.dehashed.com/docs
         // up to 5 request a sec, meaning requests not more often than 200ms each
 
@@ -27,7 +26,6 @@ namespace Osint_console
             // constructs the auth header
             var authToken = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{dehashedApiUsername}:{dehashedApiKey}"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authToken);
-
             client.DefaultRequestHeaders.UserAgent.ParseAdd(myApiName + "/Version");
             client.DefaultRequestHeaders.Accept.ParseAdd("application / json");
 
@@ -56,7 +54,6 @@ namespace Osint_console
             {
                 WriteLine($"Error fetching data: {e.Message}");
             }
-
             return entries;
         }
 
