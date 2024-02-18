@@ -15,87 +15,18 @@ using Osint_console;
 
 using System.Diagnostics;
 using System.Collections;
+using static Osint_console.HaveIBeenPwned;
 
 class MainProgram
 {
-    public static void ExecuteCurlCommand(string username, string apikey, string userAgent)
-    { 
-        //method used only for tests when new API calls doesn't work
-        var escapedArgs = $"-u \"{username}:{apikey}\" \"https://api.dehashed.com/search?query=example%40example.com\" -H \"User-Agent: {userAgent}/Version\" -H \"Accept: application/json\"";
-
-        var startInfo = new ProcessStartInfo
-        {
-            FileName = "curl",
-            Arguments = escapedArgs,
-            UseShellExecute = false,
-            RedirectStandardOutput = true,
-            CreateNoWindow = true
-        };
-
-        using (var process = Process.Start(startInfo))
-        {
-            if (process != null)
-            {
-                using (var reader = process.StandardOutput)
-                {
-                    string result = reader.ReadToEnd();
-                    WriteLine(result);
-                }
-            }
-            else
-            {
-                WriteLine("Failed to start curl process.");
-            }
-
-        }
-        //ExecuteCurlCommand(dehashedApiUsername, dehashedApiKey, apiName); (for execution in main)
-    }
-
-    static async Task Main(string[] args)
+    public static void PrintExistingData(List<Dehashed.Entry> leakedEntries, string email, List<string> pwnedHashes, List<Breach> breaches,List<Paste> pastes)
     {
-
-        /*
-        //Extracts data from methods below into main program
-
-        aggregatedData.LeakDetails.AddRange(dehashed.CheckIfEmailHasBeenLeaked());
-
-        */
-
-        //Example of password to test:
-        //qwerty1
-        //asdfzxc
-        string password = "qwerty1";
-
-        //Example of emails to test:
-        //qwerty1@xyz.com
-        //xyz@xyz.xyz
-
-        //email to be searched via API
-        string email = "xyz@xyz.xyz";
-
-        // installed NuGet packed to be able to load sensitive data from .env file
-        DotEnv.Load();
-
-        //name of my api for identification purposes
-        string apiName = Environment.GetEnvironmentVariable("myApiName");
-
-        var aggregatedData = new AggregatedData();
-
-        //Dehashed block:
-        var dehashed = new Dehashed();
-
-        string dehashedApiUsername = Environment.GetEnvironmentVariable("dehashedApiUsername");
-        string dehashedApiKey = Environment.GetEnvironmentVariable("dehashedApiKey");
-
-        //await Dehashed.CheckIfEmailHasBeenLeaked(email, dehashedApiUsername, dehashedApiKey, apiName);
-
-
-
-        //haveibeenpwned block:
-
-        var haveIBeenPwned = new HaveIBeenPwned();
-
-        var pwnedHashes = await HaveIBeenPwned.CheckIfPasswordHasBeenPwned(password);
+        WriteLine($" Leak information for {email}:");
+        foreach (var entry in leakedEntries)
+        {
+            WriteLine($"ID: {entry.Id}, Email: {entry.Email}, Username: {entry.Username}, Password: {entry.Password}, Hashed_password: {entry.Hashed_password}, Hash_type: {entry.Hash_type}, Name: {entry.Name}, Address: {entry.Address}, Phone: {entry.Phone}, Database_name: {entry.Database_name}");
+        }
+        WriteLine();
 
         if (pwnedHashes.Any())
         {
@@ -109,13 +40,6 @@ class MainProgram
         {
             WriteLine("No pwned passwords found.");
         }
-        aggregatedData.PwnedPasswordHashes.AddRange(pwnedHashes);
-
-        Thread.Sleep(6000);
-
-        string hibp_ApiKey = Environment.GetEnvironmentVariable("hibp_ApiKey");
-
-        var (breaches, pastes) = await HaveIBeenPwned.CheckIfEmailHasBeenPwned(email, hibp_ApiKey, apiName);
 
         if (breaches.Any())
         {
@@ -142,6 +66,52 @@ class MainProgram
         {
             WriteLine("\n No pastes found for this email.");
         }
+    }
+    static async Task Main(string[] args)
+    {
+        //Example of password to test:
+        //qwerty1
+        //asdfzxc
+        string password = "qwerty1";
+
+        //Example of emails to test:
+        //qwerty1@xyz.com
+        //xyz@xyz.xyz
+
+        //email to be searched via API
+        string email = "xyz@xyz.xyz";
+
+        // installed NuGet packed to be able to load sensitive data from .env file
+        DotEnv.Load();
+
+        //name of my api for identification purposes
+        string apiName = Environment.GetEnvironmentVariable("myApiName");
+
+        var aggregatedData = new AggregatedData();
+
+        //Dehashed block:
+        var dehashed = new Dehashed();
+
+        string dehashedApiUsername = Environment.GetEnvironmentVariable("dehashedApiUsername");
+        string dehashedApiKey = Environment.GetEnvironmentVariable("dehashedApiKey");
+
+        var leakedEntries = await Dehashed.CheckIfEmailHasBeenLeaked(email, dehashedApiUsername, dehashedApiKey, apiName);
+
+        //haveibeenpwned block:
+
+        var haveIBeenPwned = new HaveIBeenPwned();
+
+        var pwnedHashes = await HaveIBeenPwned.CheckIfPasswordHasBeenPwned(password);
+
+        aggregatedData.PwnedPasswordHashes.AddRange(pwnedHashes);
+
+        Thread.Sleep(6000);
+
+        string hibp_ApiKey = Environment.GetEnvironmentVariable("hibp_ApiKey");
+
+        var (breaches, pastes) = await HaveIBeenPwned.CheckIfEmailHasBeenPwned(email, hibp_ApiKey, apiName);
+
+        PrintExistingData(leakedEntries, email, pwnedHashes, breaches, pastes);
     }
 
     public class LeakDataDehashed

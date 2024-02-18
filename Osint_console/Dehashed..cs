@@ -20,8 +20,10 @@ namespace Osint_console
         private const string BaseUrl = "https://api.dehashed.com/search";
         private static readonly HttpClient client = new HttpClient();
 
-        public static async Task CheckIfEmailHasBeenLeaked(string email, string dehashedApiUsername, string dehashedApiKey, string myApiName)
+        public static async Task<List<Entry>> CheckIfEmailHasBeenLeaked(string email, string dehashedApiUsername, string dehashedApiKey, string myApiName)
         {
+            List<Entry> entries = new List<Entry>();
+
             // constructs the auth header
             var authToken = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{dehashedApiUsername}:{dehashedApiKey}"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authToken);
@@ -38,22 +40,11 @@ namespace Osint_console
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-
-                    //WriteLine(content);
-                    
                     var dehashedResponse = JsonSerializer.Deserialize<DehashedResponse>(content);
 
                     if (dehashedResponse?.Entries != null && dehashedResponse.Entries.Any())
                     {
-                        WriteLine($"Leak information for {email}:");
-                        foreach (var entry in dehashedResponse.Entries)
-                        {
-                          WriteLine($"ID: {entry.Id}, Email: {entry.Email}, Ip_address: {entry.Ip_address}, Username: {entry.Username},Password: {entry.Password}, Hashed_password: {entry.Hashed_password}, Hash_type: {entry.Hash_type}, Name: {entry.Name},Vin: {entry.Vin}, Address: {entry.Address}, Phone: {entry.Phone}, Database_name: {entry.Database_name}");
-                        }
-                    }
-                    else
-                    {
-                        WriteLine($"{email} has not been found in any leaks.");
+                        return dehashedResponse.Entries;
                     }
                 }
                 else
@@ -65,6 +56,8 @@ namespace Osint_console
             {
                 WriteLine($"Error fetching data: {e.Message}");
             }
+
+            return entries;
         }
 
         public class DehashedResponse
