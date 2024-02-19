@@ -22,10 +22,24 @@ class MainProgram
 {
     public static void PrintExistingData(List<Dehashed.Entry> leakedEntries, string email, List<string> pwnedHashes, List<Breach> breaches,List<Paste> pastes)
     {
-        WriteLine($" Leak information for {email}:");
+        WriteLine($"Leak information for {email}:");
         foreach (var entry in leakedEntries)
         {
-            WriteLine($"ID: {entry.Id}, Email: {entry.Email}, Username: {entry.Username}, Password: {entry.Password}, Hashed_password: {entry.Hashed_password}, Hash_type: {entry.Hash_type}, Name: {entry.Name}, Address: {entry.Address}, Phone: {entry.Phone}, Database_name: {entry.Database_name}");
+            List<string> nonEmptyFields = new List<string>();
+
+            if (!string.IsNullOrEmpty(entry.Id)) nonEmptyFields.Add($"ID: {entry.Id}");
+            if (!string.IsNullOrEmpty(entry.Email)) nonEmptyFields.Add($"Email: {entry.Email}");
+            if (!string.IsNullOrEmpty(entry.Username)) nonEmptyFields.Add($"Username: {entry.Username}");
+            if (!string.IsNullOrEmpty(entry.Password)) nonEmptyFields.Add($"Password: {entry.Password}");
+            if (!string.IsNullOrEmpty(entry.Hashed_password)) nonEmptyFields.Add($"Hashed_password: {entry.Hashed_password}");
+            if (!string.IsNullOrEmpty(entry.Hash_type)) nonEmptyFields.Add($"Hash_type: {entry.Hash_type}");
+            if (!string.IsNullOrEmpty(entry.Name)) nonEmptyFields.Add($"Name: {entry.Name}");
+            if (!string.IsNullOrEmpty(entry.Address)) nonEmptyFields.Add($"Address: {entry.Address}");
+            if (!string.IsNullOrEmpty(entry.Phone)) nonEmptyFields.Add($"Phone: {entry.Phone}");
+            if (!string.IsNullOrEmpty(entry.Database_name)) nonEmptyFields.Add($"Database_name: {entry.Database_name}");
+
+           // joins the non-empty fields with a separator and print
+           WriteLine(string.Join(", ", nonEmptyFields));
         }
         WriteLine();
 
