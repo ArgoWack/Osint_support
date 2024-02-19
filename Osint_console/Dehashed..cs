@@ -19,7 +19,7 @@ namespace Osint_console
         private const string BaseUrl = "https://api.dehashed.com/search";
         private static readonly HttpClient client = new HttpClient();
 
-        public static async Task<List<Entry>> CheckIfEmailHasBeenLeaked(string email, string dehashedApiUsername, string dehashedApiKey, string myApiName)
+        public static async Task<List<Entry>> CheckIfDataHasBeenLeaked(string data, string dehashedApiUsername, string dehashedApiKey, string myApiName)
         {
             List<Entry> entries = new List<Entry>();
 
@@ -30,7 +30,7 @@ namespace Osint_console
             client.DefaultRequestHeaders.Accept.ParseAdd("application / json");
 
             // prepares the request
-            string url = $"{BaseUrl}?query={Uri.EscapeDataString(email)}";
+            string url = $"{BaseUrl}?query={Uri.EscapeDataString(data)}";
 
             try
             {

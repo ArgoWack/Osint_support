@@ -20,29 +20,35 @@ using static Osint_console.HaveIBeenPwned;
 
 class MainProgram
 {
-    public static void PrintExistingData(List<Dehashed.Entry> leakedEntries, string email, List<string> pwnedHashes, List<Breach> breaches,List<Paste> pastes)
+    private static bool IsValidField(string field) =>!string.IsNullOrEmpty(field) && !string.Equals(field, "NULL", StringComparison.OrdinalIgnoreCase);
+    public static void PrintExistingDehashedData(List<Dehashed.Entry> leakedEntries, string dataKind)
     {
-        WriteLine($"Leak information for {email}:");
+        WriteLine($"Leak information for: {dataKind}");
         foreach (var entry in leakedEntries)
         {
             List<string> nonEmptyFields = new List<string>();
 
-            if (!string.IsNullOrEmpty(entry.Id)) nonEmptyFields.Add($"ID: {entry.Id}");
-            if (!string.IsNullOrEmpty(entry.Email)) nonEmptyFields.Add($"Email: {entry.Email}");
-            if (!string.IsNullOrEmpty(entry.Username)) nonEmptyFields.Add($"Username: {entry.Username}");
-            if (!string.IsNullOrEmpty(entry.Password)) nonEmptyFields.Add($"Password: {entry.Password}");
-            if (!string.IsNullOrEmpty(entry.Hashed_password)) nonEmptyFields.Add($"Hashed_password: {entry.Hashed_password}");
-            if (!string.IsNullOrEmpty(entry.Hash_type)) nonEmptyFields.Add($"Hash_type: {entry.Hash_type}");
-            if (!string.IsNullOrEmpty(entry.Name)) nonEmptyFields.Add($"Name: {entry.Name}");
-            if (!string.IsNullOrEmpty(entry.Address)) nonEmptyFields.Add($"Address: {entry.Address}");
-            if (!string.IsNullOrEmpty(entry.Phone)) nonEmptyFields.Add($"Phone: {entry.Phone}");
-            if (!string.IsNullOrEmpty(entry.Database_name)) nonEmptyFields.Add($"Database_name: {entry.Database_name}");
+            //
+            if (IsValidField(entry.Id)) nonEmptyFields.Add($"ID: {entry.Id}");
+            if (IsValidField(entry.Email)) nonEmptyFields.Add($"Email: {entry.Email}");
+            if (IsValidField(entry.Ip_address)) nonEmptyFields.Add($"Ip_address: {entry.Ip_address}");
+            if (IsValidField(entry.Username)) nonEmptyFields.Add($"Username: {entry.Username}");
+            if (IsValidField(entry.Password)) nonEmptyFields.Add($"Password: {entry.Password}");
+            if (IsValidField(entry.Hashed_password)) nonEmptyFields.Add($"Hashed_password: {entry.Hashed_password}");
+            if (IsValidField(entry.Hash_type)) nonEmptyFields.Add($"Hash_type: {entry.Hash_type}");
+            if (IsValidField(entry.Name)) nonEmptyFields.Add($"Name: {entry.Name}");
+            if (IsValidField(entry.Vin)) nonEmptyFields.Add($"Vin: {entry.Vin}");
+            if (IsValidField(entry.Address)) nonEmptyFields.Add($"Address: {entry.Address}");
+            if (IsValidField(entry.Phone)) nonEmptyFields.Add($"Phone: {entry.Phone}");
+            if (IsValidField(entry.Database_name)) nonEmptyFields.Add($"Database_name: {entry.Database_name}");
 
-           // joins the non-empty fields with a separator and print
-           WriteLine(string.Join(", ", nonEmptyFields));
+            // joins the non-empty fields with a separator and print
+            WriteLine(string.Join(", ", nonEmptyFields));
         }
+    }
+    public static void PrintExistingPwnedHashes(List<string> pwnedHashes)
+    {
         WriteLine();
-
         if (pwnedHashes.Any())
         {
             WriteLine("Pwned Password Hashes:");
@@ -55,7 +61,9 @@ class MainProgram
         {
             WriteLine("No pwned passwords found.");
         }
-
+    }
+    public static void PrintExistingBreachesPastes(string email, List<Breach> breaches, List<Paste> pastes)
+    {
         if (breaches.Any())
         {
             WriteLine("\n Breaches:");
@@ -85,33 +93,20 @@ class MainProgram
     static async Task Main(string[] args)
     {
         //Possible future user input data:
-        string dummyEmail = "";
+        string dummyEmail = "xyz@xyz.xyz"; // Example of emails to test: qwerty1@xyz.com, xyz@xyz.xyz
         string dummyId = "";
         string dummyIpAddress = "";
         string dummyUsername = "";
-        string dummyPassword = "";
+        string dummyPassword = "qwerty1";  //Example of password to test: qwerty1, asdfzxc
         string dummyHashedPassword = "";
         string dummyHashType = "";
-        string dummyNameName = "";
+        string dummyName = "";
         string dummyVin = "";
         string dummyAddress = "";
         string dummyPhone = "";
         string dummyDatabaseName = "";
 
         string dummyBreachDate = "";
-
-
-        //Example of password to test:
-        //qwerty1
-        //asdfzxc
-        string password = "qwerty1";
-
-        //Example of emails to test:
-        //qwerty1@xyz.com
-        //xyz@xyz.xyz
-
-        //email to be searched via API
-        string email = "xyz@xyz.xyz";
 
         // installed NuGet packed to be able to load sensitive data from .env file
         DotEnv.Load();
@@ -121,21 +116,78 @@ class MainProgram
 
         var aggregatedData = new AggregatedData();
 
-        //Dehashed block:
         string dehashedApiUsername = Environment.GetEnvironmentVariable("dehashedApiUsername");
         string dehashedApiKey = Environment.GetEnvironmentVariable("dehashedApiKey");
 
-        var leakedEntries = await Dehashed.CheckIfEmailHasBeenLeaked(email, dehashedApiUsername, dehashedApiKey, apiName);
+        // Possible searches according to data types:
 
-        //haveibeenpwned block:
-        var pwnedHashes = await HaveIBeenPwned.CheckIfPasswordHasBeenPwned(password);
-        aggregatedData.PwnedPasswordHashes.AddRange(pwnedHashes);
-        Thread.Sleep(6000);
-        string hibp_ApiKey = Environment.GetEnvironmentVariable("hibp_ApiKey");
-        var (breaches, pastes) = await HaveIBeenPwned.CheckIfEmailHasBeenPwned(email, hibp_ApiKey, apiName);
+        //dummyEmail
+        //string hibp_ApiKey = Environment.GetEnvironmentVariable("hibp_ApiKey");
+        //string leak_search = "email:\"" + dummyEmail + "\"";
+        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+        //var (breaches, pastes) = await HaveIBeenPwned.CheckIfEmailHasBeenPwned(dummyEmail, hibp_ApiKey, apiName);
+        //PrintExistingDehashedData(leakedEntries, dummyEmail);
+        //PrintExistingBreachesPastes(dummyEmail, breaches, pastes);
 
-        //Printing results to console
-        PrintExistingData(leakedEntries, email, pwnedHashes, breaches, pastes);
+        //dummyId
+        //string leak_search = "id:\"" + dummyId + "\"";
+        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+        //PrintExistingDehashedData(leakedEntries, dummyId);
+
+        //dummyIpAddress
+        //string leak_search = "ip_address:\"" + dummyIpAddress + "\"";
+        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+        //PrintExistingDehashedData(leakedEntries, dummyIpAddress);
+
+        //dummyUsername
+        //string leak_search = "username:\"" + dummyUsername + "\"";
+        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+        //PrintExistingDehashedData(leakedEntries, dummyUsername);
+
+        //dummyPassword
+        //string leak_search = "password:\"" + dummyPassword + "\"";
+        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+        //var pwnedHashes = await HaveIBeenPwned.CheckIfPasswordHasBeenPwned(dummyPassword);
+        //aggregatedData.PwnedPasswordHashes.AddRange(pwnedHashes);
+        //Thread.Sleep(6000);
+        //PrintExistingDehashedData(leakedEntries, dummyPassword);
+        //PrintExistingPwnedHashes(pwnedHashes);
+
+        //dummyHashedPassword
+        //string leak_search = "hashed_password:\"" + dummyHashedPassword + "\"";
+        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+        //PrintExistingDehashedData(leakedEntries, dummyHashedPassword);
+
+        //dummyHashType
+        //string leak_search = "hash_type:\"" + dummyHashType + "\"";
+        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+        //PrintExistingDehashedData(leakedEntries, dummyHashType);
+
+        //dummyName
+        //string leak_search = "name:\"" + dummyName + "\"";
+        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+        //PrintExistingDehashedData(leakedEntries, dummyName);
+
+        //dummyVin
+        //string leak_search = "vin:\"" + dummyVin + "\"";
+        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+        //PrintExistingDehashedData(leakedEntries, dummyVin);
+
+        //dummyAddress
+        //string leak_search = "address:\"" + dummyAddress + "\"";
+        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+        //PrintExistingDehashedData(leakedEntries, dummyAddress);
+
+        //dummyPhone
+        //string leak_search = "phone:\"" + dummyPhone + "\"";
+        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+        //PrintExistingDehashedData(leakedEntries, dummyPhone);
+
+        //dummyDatabaseName
+        //string leak_search = "database_name:\"" + dummyDatabaseName + "\"";
+        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+        //PrintExistingDehashedData(leakedEntries, dummyDatabaseName);
+
     }
 
     public class LeakDataDehashed
