@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osint_console", "Osint_console\Osint_console.csproj", "{DE492C7A-6AFC-4DBC-984A-599E9E7B82A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Osint_console", "Osint_console\Osint_console.csproj", "{DE492C7A-6AFC-4DBC-984A-599E9E7B82A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osint_WPF", "Osint_WPF\Osint_WPF.csproj", "{4445BFAC-2591-4E42-B04F-172DB891E57B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{DE492C7A-6AFC-4DBC-984A-599E9E7B82A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE492C7A-6AFC-4DBC-984A-599E9E7B82A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE492C7A-6AFC-4DBC-984A-599E9E7B82A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4445BFAC-2591-4E42-B04F-172DB891E57B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4445BFAC-2591-4E42-B04F-172DB891E57B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4445BFAC-2591-4E42-B04F-172DB891E57B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4445BFAC-2591-4E42-B04F-172DB891E57B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
