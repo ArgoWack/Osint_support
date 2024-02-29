@@ -36,7 +36,6 @@ namespace Osint_WPF
             {
                 expanderRow3.Height = GridLength.Auto;
             }
-            // Add similar conditions for other expanders if any
         }
 
         private void Expander_Collapsed(object sender, RoutedEventArgs e)
@@ -53,7 +52,38 @@ namespace Osint_WPF
             {
                 expanderRow3.Height = new GridLength(30);
             }
-            // Add similar conditions for other expanders if any
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //UpdateKeys button
+            var UpdateKeys = new UpdateKeys();
+            UpdateKeys.Show();
+            this.Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            //BeginDataSearch button
+            var form1 = new BeginDataSearch();
+            form1.Show();
+            this.Close();
+
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            //BrowseDataOnOtherManualSearches button
+            var form1 = new BrowseDataOnOtherManualSearches();
+            form1.Show();
+            this.Close();    
+
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            // Exit button
+            Application.Current.Shutdown();
         }
     }
 }

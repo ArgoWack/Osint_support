@@ -37,7 +37,7 @@
                 FontStyle="Italic"
                 FontSize="20"
                 HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch">
+                VerticalAlignment="Stretch" Click="Button_Click">
             </Button>
 
             <Expander Grid.Row="2" x:Name="expander1"
@@ -48,7 +48,7 @@
               FontSize="15"
               Expanded="Expander_Expanded"
               Collapsed="Expander_Collapsed">
-                <TextBlock Text="Allows browsing through data on manual searches options"
+                <TextBlock Text="To be able to fully utilize data search funcionality the application requires connection to APIs of Dehashed and HaveIBeenPwned. For this to be able to work properly here you can update required data."
            Padding="10" TextWrapping="Wrap"/>
             </Expander>
 
@@ -59,7 +59,7 @@
                 FontStyle="Italic"
                 FontSize="20"
                 HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch">
+                VerticalAlignment="Stretch" Click="Button_Click_1">
             </Button>
 
             <Expander Grid.Row="4" x:Name="expander2"
@@ -70,7 +70,7 @@
               FontSize="15"
               Expanded="Expander_Expanded"
               Collapsed="Expander_Collapsed">
-                <TextBlock Text="Allows browsing through data on manual searches options"
+                <TextBlock Text="Here you can search breaches via Dehashed/HaveIBeenPwned APIs depending on the available resources you gave to aplication via 'Update Keys'."
            Padding="10" TextWrapping="Wrap"/>
             </Expander>
 
@@ -81,18 +81,18 @@
                 FontStyle="Italic"
                 FontSize="20"
                 HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch">
+                VerticalAlignment="Stretch" Click="Button_Click_2">
             </Button>
 
             <Expander Grid.Row="6" x:Name="expander3"
-              Header="About 'Browse data on other manual searches" 
+              Header="About 'Browse data on other manual searches'" 
               Background="LightGray" 
               Foreground="Black"
               FontWeight="Bold"
               FontSize="15"
               Expanded="Expander_Expanded"
               Collapsed="Expander_Collapsed">
-                <TextBlock Text="Allows browsing through data on manual searches options"
+                <TextBlock Text="Here you can learn of other tools which may help you with your OSINT endeavours which this aplication doesn't provide directly."
            Padding="10" TextWrapping="Wrap"/>
             </Expander>
 
@@ -103,7 +103,7 @@
                 FontStyle="Italic"
                 FontSize="20"
                 HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch">
+                VerticalAlignment="Stretch" Click="Button_Click_3">
             </Button>
         </Grid>
     </ScrollViewer>

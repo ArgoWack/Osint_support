@@ -1,0 +1,39 @@
+﻿<Window x:Class="Osint_WPF.BeginDataSearch"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Osint_WPF"
+        mc:Ignorable="d"
+        Title="Osint Support Tool" Height="700" Width="700"
+        WindowStartupLocation="CenterScreen">
+
+    <ScrollViewer>
+        <Grid VerticalAlignment="Stretch" Background="Aqua">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0"
+               Content="BeginDataSearch"
+               Background="Aqua"
+               FontWeight="ExtraBold"
+               FontSize="30"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center">
+            </Label>
+
+            <Button Grid.Row="7"
+                Content="Return"
+                Background="Aqua"
+                FontWeight="Bold"
+                FontStyle="Italic"
+                FontSize="20"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch" Click="Button_Click_3">
+            </Button>
+        </Grid>
+    </ScrollViewer>
+
+</Window>
