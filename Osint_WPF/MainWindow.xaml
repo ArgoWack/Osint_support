@@ -9,12 +9,15 @@
         WindowStartupLocation="CenterScreen">
 
     <ScrollViewer>
-        <Grid VerticalAlignment="Stretch">
+        <Grid VerticalAlignment="Stretch" Background="Aqua">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition x:Name="expanderRow1" Height="30"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition x:Name="expanderRow2" Height="30"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition x:Name="expanderRow3" Height="30"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -22,9 +25,9 @@
                Content="Main Menu"
                Background="Aqua"
                FontWeight="ExtraBold"
-               FontSize="15"
-               HorizontalAlignment="Stretch"
-               VerticalAlignment="Stretch">
+               FontSize="30"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center">
             </Label>
 
             <Button Grid.Row="1"
@@ -36,7 +39,20 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch">
             </Button>
-            <Button Grid.Row="2"
+
+            <Expander Grid.Row="2" x:Name="expander1"
+              Header="About 'Update keys'"
+              Background="LightGray" 
+              Foreground="Black"
+              FontWeight="Bold"
+              FontSize="15"
+              Expanded="Expander_Expanded"
+              Collapsed="Expander_Collapsed">
+                <TextBlock Text="Allows browsing through data on manual searches options"
+           Padding="10" TextWrapping="Wrap"/>
+            </Expander>
+
+            <Button Grid.Row="3"
                 Content="Begin data search"
                 Background="Aqua"
                 FontWeight="Bold"
@@ -45,7 +61,20 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch">
             </Button>
-            <Button Grid.Row="3"
+
+            <Expander Grid.Row="4" x:Name="expander2"
+              Header="About 'Begin data search'"
+              Background="LightGray" 
+              Foreground="Black"
+              FontWeight="Bold"
+              FontSize="15"
+              Expanded="Expander_Expanded"
+              Collapsed="Expander_Collapsed">
+                <TextBlock Text="Allows browsing through data on manual searches options"
+           Padding="10" TextWrapping="Wrap"/>
+            </Expander>
+
+            <Button Grid.Row="5"
                 Content="Browse data on other manual searches"
                 Background="Aqua"
                 FontWeight="Bold"
@@ -54,7 +83,20 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch">
             </Button>
-            <Button Grid.Row="4"
+
+            <Expander Grid.Row="6" x:Name="expander3"
+              Header="About 'Browse data on other manual searches" 
+              Background="LightGray" 
+              Foreground="Black"
+              FontWeight="Bold"
+              FontSize="15"
+              Expanded="Expander_Expanded"
+              Collapsed="Expander_Collapsed">
+                <TextBlock Text="Allows browsing through data on manual searches options"
+           Padding="10" TextWrapping="Wrap"/>
+            </Expander>
+
+            <Button Grid.Row="7"
                 Content="Exit"
                 Background="Aqua"
                 FontWeight="Bold"

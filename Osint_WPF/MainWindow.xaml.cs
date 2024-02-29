@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +20,40 @@ namespace Osint_WPF
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Expander_Expanded(object sender, RoutedEventArgs e)
+        {
+            if (sender == expander1)
+            {
+                expanderRow1.Height = GridLength.Auto;
+            }
+            else if (sender == expander2)
+            {
+                expanderRow2.Height = GridLength.Auto;
+            }
+            else if (sender == expander3)
+            {
+                expanderRow3.Height = GridLength.Auto;
+            }
+            // Add similar conditions for other expanders if any
+        }
+
+        private void Expander_Collapsed(object sender, RoutedEventArgs e)
+        {
+            if (sender == expander1)
+            {
+                expanderRow1.Height = new GridLength(30);
+            }
+            else if (sender == expander2)
+            {
+                expanderRow2.Height = new GridLength(30);
+            }
+            else if (sender == expander3)
+            {
+                expanderRow3.Height = new GridLength(30);
+            }
+            // Add similar conditions for other expanders if any
         }
     }
 }
