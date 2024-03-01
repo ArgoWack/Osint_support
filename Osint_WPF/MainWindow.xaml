@@ -9,103 +9,110 @@
         WindowStartupLocation="CenterScreen">
 
     <ScrollViewer>
-        <Grid VerticalAlignment="Stretch" Background="Aqua">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition x:Name="expanderRow1" Height="30"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition x:Name="expanderRow2" Height="30"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition x:Name="expanderRow3" Height="30"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+        <Border Background="CadetBlue"
+                BorderBrush="Black" 
+                BorderThickness="10" 
+                CornerRadius="15" 
+                Padding="10">
+            <Grid VerticalAlignment="Stretch" Background="Aqua">
 
-            <Label Grid.Row="0"
-               Content="Main Menu"
-               Background="Aqua"
-               FontWeight="ExtraBold"
-               FontSize="30"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center">
-            </Label>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition x:Name="expanderRow1" Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition x:Name="expanderRow2" Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition x:Name="expanderRow3" Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <Button Grid.Row="1"
-                Content="Update keys"
-                Background="Aqua"
-                FontWeight="Bold"
-                FontStyle="Italic"
-                FontSize="20"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch" Click="Button_Click">
-            </Button>
+                <Label Grid.Row="0"
+                       Content="Main Menu"
+                       Background="Aqua"
+                       FontWeight="ExtraBold"
+                       FontSize="30"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center">
+                </Label>
 
-            <Expander Grid.Row="2" x:Name="expander1"
-              Header="About 'Update keys'"
-              Background="LightGray" 
-              Foreground="Black"
-              FontWeight="Bold"
-              FontSize="15"
-              Expanded="Expander_Expanded"
-              Collapsed="Expander_Collapsed">
-                <TextBlock Text="To be able to fully utilize data search funcionality the application requires connection to APIs of Dehashed and HaveIBeenPwned. For this to be able to work properly here you can update required data."
-           Padding="10" TextWrapping="Wrap"/>
-            </Expander>
+                <Button Grid.Row="1"
+                        Content="Update keys"
+                        Background="Aqua"
+                        FontWeight="Bold"
+                        FontStyle="Italic"
+                        FontSize="20"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch" Click="Button_Click">
+                </Button>
 
-            <Button Grid.Row="3"
-                Content="Begin data search"
-                Background="Aqua"
-                FontWeight="Bold"
-                FontStyle="Italic"
-                FontSize="20"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch" Click="Button_Click_1">
-            </Button>
+                <Expander Grid.Row="2" x:Name="expander1"
+                          Header="About 'Update keys'"
+                          Background="LightGray" 
+                          Foreground="Black"
+                          FontWeight="Bold"
+                          FontSize="15"
+                          Expanded="Expander_Expanded"
+                          Collapsed="Expander_Collapsed">
+                    <TextBlock Text="To be able to fully utilize data search functionality the application requires connection to APIs of Dehashed and HaveIBeenPwned. For this to be able to work properly here you can update required data."
+                               Padding="10" TextWrapping="Wrap"/>
+                </Expander>
 
-            <Expander Grid.Row="4" x:Name="expander2"
-              Header="About 'Begin data search'"
-              Background="LightGray" 
-              Foreground="Black"
-              FontWeight="Bold"
-              FontSize="15"
-              Expanded="Expander_Expanded"
-              Collapsed="Expander_Collapsed">
-                <TextBlock Text="Here you can search breaches via Dehashed/HaveIBeenPwned APIs depending on the available resources you gave to aplication via 'Update Keys'."
-           Padding="10" TextWrapping="Wrap"/>
-            </Expander>
+                <Button Grid.Row="3"
+                        Content="Begin data search"
+                        Background="Aqua"
+                        FontWeight="Bold"
+                        FontStyle="Italic"
+                        FontSize="20"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch" Click="Button_Click_1">
+                </Button>
 
-            <Button Grid.Row="5"
-                Content="Browse data on other manual searches"
-                Background="Aqua"
-                FontWeight="Bold"
-                FontStyle="Italic"
-                FontSize="20"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch" Click="Button_Click_2">
-            </Button>
+                <Expander Grid.Row="4" x:Name="expander2"
+                          Header="About 'Begin data search'"
+                          Background="LightGray" 
+                          Foreground="Black"
+                          FontWeight="Bold"
+                          FontSize="15"
+                          Expanded="Expander_Expanded"
+                          Collapsed="Expander_Collapsed">
+                    <TextBlock Text="Here you can search breaches via Dehashed/HaveIBeenPwned APIs depending on the available resources you gave to application via 'Update Keys'."
+                               Padding="10" TextWrapping="Wrap"/>
+                </Expander>
 
-            <Expander Grid.Row="6" x:Name="expander3"
-              Header="About 'Browse data on other manual searches'" 
-              Background="LightGray" 
-              Foreground="Black"
-              FontWeight="Bold"
-              FontSize="15"
-              Expanded="Expander_Expanded"
-              Collapsed="Expander_Collapsed">
-                <TextBlock Text="Here you can learn of other tools which may help you with your OSINT endeavours which this aplication doesn't provide directly."
-           Padding="10" TextWrapping="Wrap"/>
-            </Expander>
+                <Button Grid.Row="5"
+                        Content="Browse data on other manual searches"
+                        Background="Aqua"
+                        FontWeight="Bold"
+                        FontStyle="Italic"
+                        FontSize="20"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch" Click="Button_Click_2">
+                </Button>
 
-            <Button Grid.Row="7"
-                Content="Exit"
-                Background="Aqua"
-                FontWeight="Bold"
-                FontStyle="Italic"
-                FontSize="20"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch" Click="Button_Click_3">
-            </Button>
-        </Grid>
+                <Expander Grid.Row="6" x:Name="expander3"
+                          Header="About 'Browse data on other manual searches'" 
+                          Background="LightGray" 
+                          Foreground="Black"
+                          FontWeight="Bold"
+                          FontSize="15"
+                          Expanded="Expander_Expanded"
+                          Collapsed="Expander_Collapsed">
+                    <TextBlock Text="Here you can learn of other tools which may help you with your OSINT endeavours which this application doesn't provide directly."
+                               Padding="10" TextWrapping="Wrap"/>
+                </Expander>
+
+                <Button Grid.Row="7"
+                        Content="Exit"
+                        Background="Aqua"
+                        FontWeight="Bold"
+                        FontStyle="Italic"
+                        FontSize="20"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch" Click="Button_Click_3">
+                </Button>
+            </Grid>
+        </Border>
     </ScrollViewer>
 
 </Window>

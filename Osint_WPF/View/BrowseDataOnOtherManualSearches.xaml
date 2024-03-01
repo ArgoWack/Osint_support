@@ -1,4 +1,4 @@
-﻿<Window x:Class="Osint_WPF.UpdateKeys"
+﻿<Window x:Class="Osint_WPF.BrowseDataOnOtherManualSearches"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,14 +9,19 @@
         WindowStartupLocation="CenterScreen">
 
     <ScrollViewer>
-        <Grid VerticalAlignment="Stretch" Background="Aqua">
+        <Border Background="CadetBlue"
+                BorderBrush="Black" 
+                BorderThickness="10" 
+                CornerRadius="15" 
+                Padding="10">
+            <Grid VerticalAlignment="Stretch" Background="Aqua">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0"
-               Content="UpdateKeys"
+               Content="BrowseDataOnOtherManualSearches"
                Background="Aqua"
                FontWeight="ExtraBold"
                FontSize="30"
@@ -34,6 +39,7 @@
                 VerticalAlignment="Stretch" Click="Button_Click_3">
             </Button>
         </Grid>
+        </Border>
     </ScrollViewer>
 
 </Window>
