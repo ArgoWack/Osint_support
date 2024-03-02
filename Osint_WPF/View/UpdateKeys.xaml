@@ -14,7 +14,7 @@
                 BorderThickness="10" 
                 CornerRadius="15" 
                 Padding="10">
-            <Grid VerticalAlignment="Stretch" Background="Aqua">
+            <Grid VerticalAlignment="Stretch" Background="{StaticResource MenuBackgroundColor}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -22,7 +22,7 @@
 
                 <Label Grid.Row="0"
                Content="UpdateKeys"
-               Background="Aqua"
+               Background="{StaticResource MenuBackgroundColor}"
                FontWeight="ExtraBold"
                FontSize="30"
                HorizontalAlignment="Center"
@@ -31,7 +31,7 @@
 
                 <Button Grid.Row="7"
                 Content="Return"
-                Background="Aqua"
+                Background="{StaticResource MenuBackgroundColor}"
                 FontWeight="Bold"
                 FontStyle="Italic"
                 FontSize="20"

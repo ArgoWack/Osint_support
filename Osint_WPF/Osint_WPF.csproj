@@ -9,6 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Page Remove="View\GlobalResources.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="View\GlobalResources.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Model\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
