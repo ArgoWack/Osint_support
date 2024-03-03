@@ -15,30 +15,97 @@
                 BorderThickness="5" 
                 Padding="10"
                 CornerRadius="8,8,0,8">
-            
+
             <Grid VerticalAlignment="Stretch" Background="{StaticResource MenuBackgroundColor}">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0"
-               Content="UpdateKeys"
-               Background="{StaticResource MenuBackgroundColor}"
-               FontWeight="ExtraBold"
-               FontSize="30"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center">
+                       Content="Update Keys"
+                       Background="{StaticResource MenuBackgroundColor}"
+                       FontWeight="ExtraBold"
+                       FontSize="30"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center">
                 </Label>
 
+                <Label Grid.Row="1"
+                       Content="Insert Haveibeenpwned API key:"
+                    Background="{StaticResource MenuBackgroundColor}"
+                    FontWeight="Bold"
+                    FontStyle="Italic"
+                    FontSize="20"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                </Label>
+
+                <TextBox Grid.Row="2"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch"
+                         Margin="0,5" TextChanged="TextBox_TextChanged">
+                </TextBox>
+
+                <Label Grid.Row="3"
+                    Content="Insert Dehashed username:"
+                    Background="{StaticResource MenuBackgroundColor}"
+                    FontWeight="Bold"
+                    FontStyle="Italic"
+                    FontSize="20"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                </Label>
+
+                <TextBox Grid.Row="4"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch"
+                         Margin="0,5" TextChanged="TextBox_TextChanged_1">
+                </TextBox>
+
+                <Label Grid.Row="5"
+                    Content="Insert Dehashed API key:"
+                    Background="{StaticResource MenuBackgroundColor}"
+                    FontWeight="Bold"
+                    FontStyle="Italic"
+                    FontSize="20"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                </Label>
+
+                <TextBox Grid.Row="6"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch"
+                         Margin="0,5" TextChanged="TextBox_TextChanged_2">
+                </TextBox>
+
                 <Button Grid.Row="7"
-                Content="Return"
-                Background="{StaticResource MenuBackgroundColor}"
-                FontWeight="Bold"
-                FontStyle="Italic"
-                FontSize="20"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch" Click="Button_Click_3">
+                    Content="Confirm changes"
+                    Background="{StaticResource MenuBackgroundColor}"
+                    FontWeight="Bold"
+                    FontStyle="Italic"
+                    FontSize="20"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Click="Button_Click_1">
+                </Button>
+
+                <Button Grid.Row="8"
+                    Content="Return"
+                    Background="{StaticResource MenuBackgroundColor}"
+                    FontWeight="Bold"
+                    FontStyle="Italic"
+                    FontSize="20"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Click="Button_Click_2">
                 </Button>
             </Grid>
         </Border>

@@ -72,7 +72,7 @@
                     FontSize="20"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    Click="Button_Click">
+                    Click="Button_Click_1">
                     <StackPanel Orientation="Horizontal">
                         <Image Width="25" Source="pack://application:,,,/View/Images/DataIcon.png"/>
                         <TextBlock Text="Begin data search" Margin="5,0,0,0" VerticalAlignment="Center"/>
@@ -92,23 +92,13 @@
                 </Expander>
 
                 <Button Grid.Row="5"
-                        Content="Browse data on other manual searches"
-                        Background="{StaticResource MenuBackgroundColor}"
-                        FontWeight="Bold"
-                        FontStyle="Italic"
-                        FontSize="20"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch" Click="Button_Click_2">
-                </Button>
-
-                <Button Grid.Row="5"
                     Background="{StaticResource MenuBackgroundColor}"
                     FontWeight="Bold"
                     FontStyle="Italic"
                     FontSize="20"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    Click="Button_Click">
+                    Click="Button_Click_2">
                     <StackPanel Orientation="Horizontal">
                         <Image Width="25" Source="pack://application:,,,/View/Images/BookIcon.png"/>
                         <TextBlock Text="Browse data on other manual searches" Margin="5,0,0,0" VerticalAlignment="Center"/>

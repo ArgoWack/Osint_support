@@ -65,8 +65,8 @@ namespace Osint_WPF
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             //BeginDataSearch button
-            var form1 = new BeginDataSearch();
-            form1.Show();
+            var BeginDataSearch = new BeginDataSearch();
+            BeginDataSearch.Show();
             this.Close();
 
         }
@@ -74,8 +74,8 @@ namespace Osint_WPF
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             //BrowseDataOnOtherManualSearches button
-            var form1 = new BrowseDataOnOtherManualSearches();
-            form1.Show();
+            var BrowseDataOnOtherManualSearches = new BrowseDataOnOtherManualSearches();
+            BrowseDataOnOtherManualSearches.Show();
             this.Close();    
 
         }
