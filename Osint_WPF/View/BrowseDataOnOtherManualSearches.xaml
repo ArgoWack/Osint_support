@@ -6,14 +6,16 @@
         xmlns:local="clr-namespace:Osint_WPF"
         mc:Ignorable="d"
         Title="Osint Support Tool" Height="700" Width="700"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResizeWithGrip">
 
     <ScrollViewer>
-        <Border Background="CadetBlue"
-                BorderBrush="Black" 
-                BorderThickness="10" 
-                CornerRadius="15" 
-                Padding="10">
+        <Border Background="{StaticResource BorderBackgroundColor}"
+                BorderBrush="{StaticResource BorderBrushColor}" 
+                BorderThickness="5" 
+                Padding="10"
+                CornerRadius="8,8,0,8">
+            
             <Grid VerticalAlignment="Stretch" Background="{StaticResource MenuBackgroundColor}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>

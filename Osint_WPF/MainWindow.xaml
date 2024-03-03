@@ -6,14 +6,16 @@
         xmlns:local="clr-namespace:Osint_WPF"
         mc:Ignorable="d"
         Title="Osint Support Tool" Height="700" Width="700"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResizeWithGrip">
 
     <ScrollViewer>
         <Border Background="{StaticResource BorderBackgroundColor}"
-                BorderBrush="Black" 
-                BorderThickness="10" 
-                CornerRadius="15" 
-                Padding="10">
+                BorderBrush="{StaticResource BorderBrushColor}" 
+                BorderThickness="5"
+                Padding="10"
+                CornerRadius="8,8,0,8">
+            
             <Grid VerticalAlignment="Stretch" Background="{StaticResource MenuBackgroundColor}">
 
                 <Grid.RowDefinitions>
@@ -37,14 +39,19 @@
                 </Label>
 
                 <Button Grid.Row="1"
-                        Content="Update keys"
-                        Background="{StaticResource MenuBackgroundColor}"
-                        FontWeight="Bold"
-                        FontStyle="Italic"
-                        FontSize="20"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch" Click="Button_Click">
+                    Background="{StaticResource MenuBackgroundColor}"
+                    FontWeight="Bold"
+                    FontStyle="Italic"
+                    FontSize="20"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Click="Button_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="25" Source="pack://application:,,,/View/Images/KeyIcon.png"/>
+                        <TextBlock Text="Update keys" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
                 </Button>
+
 
                 <Expander Grid.Row="2" x:Name="expander1"
                           Header="About 'Update keys'"
@@ -59,13 +66,17 @@
                 </Expander>
 
                 <Button Grid.Row="3"
-                        Content="Begin data search"
-                        Background="{StaticResource MenuBackgroundColor}"
-                        FontWeight="Bold"
-                        FontStyle="Italic"
-                        FontSize="20"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch" Click="Button_Click_1">
+                    Background="{StaticResource MenuBackgroundColor}"
+                    FontWeight="Bold"
+                    FontStyle="Italic"
+                    FontSize="20"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Click="Button_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="25" Source="pack://application:,,,/View/Images/DataIcon.png"/>
+                        <TextBlock Text="Begin data search" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
                 </Button>
 
                 <Expander Grid.Row="4" x:Name="expander2"
@@ -90,6 +101,20 @@
                         VerticalAlignment="Stretch" Click="Button_Click_2">
                 </Button>
 
+                <Button Grid.Row="5"
+                    Background="{StaticResource MenuBackgroundColor}"
+                    FontWeight="Bold"
+                    FontStyle="Italic"
+                    FontSize="20"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Click="Button_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="25" Source="pack://application:,,,/View/Images/BookIcon.png"/>
+                        <TextBlock Text="Browse data on other manual searches" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                
                 <Expander Grid.Row="6" x:Name="expander3"
                           Header="About 'Browse data on other manual searches'" 
                           Background="LightGray" 
