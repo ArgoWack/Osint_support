@@ -48,7 +48,8 @@
                     VerticalAlignment="Center">
                 </Label>
 
-                <TextBox Grid.Row="2"
+                <TextBox x:Name="txtHibpApiKey"
+                         Grid.Row="2"
                          HorizontalAlignment="Stretch"
                          VerticalAlignment="Stretch"
                          Margin="0,5" TextChanged="TextBox_TextChanged">
@@ -64,7 +65,8 @@
                     VerticalAlignment="Center">
                 </Label>
 
-                <TextBox Grid.Row="4"
+                <TextBox x:Name="txtDehashedUsername"
+                         Grid.Row="4"
                          HorizontalAlignment="Stretch"
                          VerticalAlignment="Stretch"
                          Margin="0,5" TextChanged="TextBox_TextChanged_1">
@@ -80,7 +82,8 @@
                     VerticalAlignment="Center">
                 </Label>
 
-                <TextBox Grid.Row="6"
+                <TextBox x:Name="txtDehashedApiKey"
+                         Grid.Row="6"
                          HorizontalAlignment="Stretch"
                          VerticalAlignment="Stretch"
                          Margin="0,5" TextChanged="TextBox_TextChanged_2">
