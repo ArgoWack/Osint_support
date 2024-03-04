@@ -48,7 +48,8 @@
                     VerticalAlignment="Center">
                 </Label>
 
-                <TextBox x:Name="txtHibpApiKey"
+                <TextBox Text="{Binding HibpApiKey, UpdateSourceTrigger=PropertyChanged}" 
+                         x:Name="txtHibpApiKey"
                          Grid.Row="2"
                          HorizontalAlignment="Stretch"
                          VerticalAlignment="Stretch"
@@ -66,6 +67,7 @@
                 </Label>
 
                 <TextBox x:Name="txtDehashedUsername"
+                         Text="{Binding DehashedUsername, UpdateSourceTrigger=PropertyChanged}"
                          Grid.Row="4"
                          HorizontalAlignment="Stretch"
                          VerticalAlignment="Stretch"
@@ -82,22 +84,24 @@
                     VerticalAlignment="Center">
                 </Label>
 
-                <TextBox x:Name="txtDehashedApiKey"
+                <TextBox Text="{Binding DehashedApiKey, UpdateSourceTrigger=PropertyChanged}"
+                         x:Name="txtDehashedApiKey"
                          Grid.Row="6"
                          HorizontalAlignment="Stretch"
                          VerticalAlignment="Stretch"
                          Margin="0,5" TextChanged="TextBox_TextChanged_2">
                 </TextBox>
 
-                <Button Grid.Row="7"
-                    Content="Confirm changes"
-                    Background="{StaticResource MenuBackgroundColor}"
-                    FontWeight="Bold"
-                    FontStyle="Italic"
-                    FontSize="20"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Click="Button_Click_1">
+                <Button Command="{Binding UpdateCommand}"
+                        Grid.Row="7"
+                        Content="Confirm changes"
+                        Background="{StaticResource MenuBackgroundColor}"
+                        FontWeight="Bold"
+                        FontStyle="Italic"
+                        FontSize="20"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Click="Button_Click_1">
                 </Button>
 
                 <Button Grid.Row="8"
