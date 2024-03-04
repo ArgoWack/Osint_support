@@ -5,43 +5,157 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Osint_WPF"
         mc:Ignorable="d"
-        Title="Osint Support Tool" Height="700" Width="700"
+        Title="Osint Support Tool" Height="450" Width="900"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResizeWithGrip">
 
     <ScrollViewer>
         <Border Background="{StaticResource BorderBackgroundColor}"
                 BorderBrush="{StaticResource BorderBrushColor}" 
-                BorderThickness="5" 
+                BorderThickness="5"
                 Padding="10"
                 CornerRadius="8,8,0,8">
-            
-            <Grid VerticalAlignment="Stretch" Background="{StaticResource MenuBackgroundColor}">
+
+            <Grid  Background="{StaticResource MenuBackgroundColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Side (3/4) -->
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                    
+                        <StackPanel Grid.Row="0" Margin="5">
+                                <Label Content="Email"                     
+                                        Background="{StaticResource MenuBackgroundColor}"
+                                        FontWeight="Bold"
+                                        FontStyle="Italic"
+                                        FontSize="20" 
+                                       HorizontalAlignment="Center"/>
+                            <TextBox HorizontalAlignment="Stretch" Margin="0,5,0,10"/>
+                        </StackPanel>
+
+                            <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                                <Label Content="Username" Grid.Row="0" Grid.Column="0" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
+                            <TextBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" Margin="5"/>
+
+                                <Label Content="Password" Grid.Row="0" Grid.Column="1" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
+                            <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5"/>
+
+                                <Label Content="Phone" Grid.Row="0" Grid.Column="2" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
+                            <TextBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"/>
+
+                                <Label Content="Adress" Grid.Row="2" Grid.Column="0" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
+                            <TextBox Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" Margin="5"/>
+
+                                <Label Content="HashedPassword" Grid.Row="2" Grid.Column="1" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
+                            <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5"/>
+
+                                <Label Content="HashType" Grid.Row="2" Grid.Column="2" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
+                            <TextBox Grid.Row="3" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"/>
+
+                                <Label Content="Name" Grid.Row="4" Grid.Column="0" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
+                            <TextBox Grid.Row="5" Grid.Column="0" HorizontalAlignment="Stretch" Margin="5"/>
+
+                                <Label Content="Id" Grid.Row="4" Grid.Column="1" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
+                            <TextBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5"/>
+
+                                <Label Content="Ip Adress" Grid.Row="4" Grid.Column="2" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
+                            <TextBox Grid.Row="5" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"/>
+
+                                <Label Content="Vin" Grid.Row="6" Grid.Column="0" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
+                            <TextBox Grid.Row="7" Grid.Column="0" HorizontalAlignment="Stretch" Margin="5"/>
+
+                                <Label Content="Database name" Grid.Row="6" Grid.Column="1" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
+                            <TextBox Grid.Row="7" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5"/>
+
+                                <Label Content="Breach date" Grid.Row="6" Grid.Column="2" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
+                            <TextBox Grid.Row="7" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"/>
+
+                        </Grid>
+
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                            <Button 
+                                Content="Return"
+                                Background="{StaticResource MenuBackgroundColor}"
+                                FontWeight="Bold"
+                                FontStyle="Italic"
+                                FontSize="25"
+                                Margin="5" Click="Button_Click"/>
+                            <Button 
+                               Content="Search"
+                               Background="{StaticResource MenuBackgroundColor}"
+                               FontWeight="Bold"
+                               FontStyle="Italic"
+                               FontSize="25"
+                               Margin="5" Click="Button_Click_1"/>
+                            <Button 
+                               Content="Clear"
+                               Background="{StaticResource MenuBackgroundColor}"
+                               FontWeight="Bold"
+                               FontStyle="Italic"
+                               FontSize="25"
+                               Margin="5" Click="Button_Click_2"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </StackPanel>
+
+            <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition x:Name="expanderRow1" Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                <Label Grid.Row="0"
-               Content="BeginDataSearch"
-               Background="{StaticResource MenuBackgroundColor}"
-               FontWeight="ExtraBold"
-               FontSize="30"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center">
-                </Label>
+                    <Label Grid.Row="0" Content="Search engines:" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
 
-                <Button Grid.Row="7"
-                Content="Return"
-                Background="{StaticResource MenuBackgroundColor}"
-                FontWeight="Bold"
-                FontStyle="Italic"
-                FontSize="20"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch" Click="Button_Click_3">
-                </Button>
-            </Grid>
+                    <CheckBox Grid.Row="1" Content="Haveibeenpwned" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="15" HorizontalAlignment="Left"/>
+
+                    <CheckBox Grid.Row="2" Content="Dehashed" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="15" HorizontalAlignment="Left"/>
+
+                    <Expander Grid.Row="3" x:Name="expander1"
+                          Header="About 'Search options'"
+                          Background="LightGray" 
+                          Foreground="Black"
+                          FontWeight="Bold"
+                          FontSize="15"
+                          Expanded="Expander_Expanded"
+                          Collapsed="Expander_Collapsed">
+                        <TextBlock Text="The Search will be performed only by marked engines. Dehashed covers searches in all fields except for Breach date. Haveibeenpwned covers email with api and password without. Its possible also to limit haveibeenpwned results by Breach date. In this case results from this date onward are shown."
+                               Padding="10" TextWrapping="Wrap"/>
+                    </Expander>
+                </Grid>
+        </Grid>
         </Border>
     </ScrollViewer>
-
 </Window>

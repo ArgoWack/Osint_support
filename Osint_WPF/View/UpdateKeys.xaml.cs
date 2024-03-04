@@ -51,8 +51,8 @@ namespace Osint_WPF
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             //Return button
-            var UpdateKeys = new MainWindow();
-            UpdateKeys.Show();
+            var MainWindow = new MainWindow();
+            MainWindow.Show();
             this.Close();
         }
 
