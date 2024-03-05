@@ -99,9 +99,9 @@
                                 <TextBox x:Name="DatabaseNameTextBox"  Grid.Row="7" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5"/>
 
                                 <Label Content="Breach date" Grid.Row="6" Grid.Column="2" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
-                                <TextBox x:Name="BreachDateTextBox" Grid.Row="7" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"/>
+                                <DatePicker x:Name="BreachDateDatePickerBox" Grid.Row="7" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"/>
 
-                        </Grid>
+                            </Grid>
 
                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
                             <Button 
