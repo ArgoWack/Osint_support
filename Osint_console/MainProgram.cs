@@ -114,8 +114,6 @@ class MainProgram
         //name of my api for identification purposes
         string apiName = Environment.GetEnvironmentVariable("myApiName");
 
-        var aggregatedData = new AggregatedData();
-
         string dehashedApiUsername = Environment.GetEnvironmentVariable("dehashedApiUsername");
         string dehashedApiKey = Environment.GetEnvironmentVariable("dehashedApiKey");
 
@@ -145,13 +143,12 @@ class MainProgram
         //PrintExistingDehashedData(leakedEntries, dummyUsername);
 
         //dummyPassword
-        string leak_search = "password:\"" + dummyPassword + "\"";
-        var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-        var pwnedHashes = await HaveIBeenPwned.CheckIfPasswordHasBeenPwned(dummyPassword);
-        aggregatedData.PwnedPasswordHashes.AddRange(pwnedHashes);
-        Thread.Sleep(6000);
-        PrintExistingDehashedData(leakedEntries, dummyPassword);
-        PrintExistingPwnedHashes(pwnedHashes);
+        //string leak_search = "password:\"" + dummyPassword + "\"";
+        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+        //var pwnedHashes = await HaveIBeenPwned.CheckIfPasswordHasBeenPwned(dummyPassword);
+        //Thread.Sleep(6000);
+        //PrintExistingDehashedData(leakedEntries, dummyPassword);
+        //PrintExistingPwnedHashes(pwnedHashes);
 
         //dummyHashedPassword
         //string leak_search = "hashed_password:\"" + dummyHashedPassword + "\"";
@@ -217,13 +214,5 @@ class MainProgram
         public string Source { get; set; }
         public string Date { get; set; }
         public string Id { get; set; }
-    }
-
-    public class AggregatedData
-    {
-        public List<LeakDataDehashed> LeakDetails { get; set; } = new List<LeakDataDehashed>();
-        public List<string> PwnedPasswordHashes { get; set; } = new List<string>();
-        public List<BreachDataHaveibeenpwned> EmailBreaches { get; set; } = new List<BreachDataHaveibeenpwned>();
-        public List<PasteDataHaveibeenpwned> EmailPastes { get; set; } = new List<PasteDataHaveibeenpwned>();
     }
 }

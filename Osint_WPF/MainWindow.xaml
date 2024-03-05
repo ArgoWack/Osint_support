@@ -113,7 +113,7 @@
                           FontSize="15"
                           Expanded="Expander_Expanded"
                           Collapsed="Expander_Collapsed">
-                    <TextBlock Text="Here you can learn of other tools which may help you with your OSINT endeavours which this application doesn't provide directly."
+                    <TextBlock Text="Here you can learn of other tools which may help you with your OSINT endeavors which this application doesn't provide directly."
                                Padding="10" TextWrapping="Wrap"/>
                 </Expander>
 
