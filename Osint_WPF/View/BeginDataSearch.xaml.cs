@@ -66,5 +66,71 @@ namespace Osint_WPF
         {
             //clear
         }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (this.IsLoaded)
+            {
+                UpdateTextBoxesVisibility();
+            }
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (this.IsLoaded)
+            {
+                UpdateTextBoxesVisibility();
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // had to add this to prevent errors resulting from trying to acces UpdateTextBoxesVisibility before form was loaded
+            UpdateTextBoxesVisibility();
+        }
+
+        private void UpdateTextBoxesVisibility()
+        {
+            bool isHaveibeenpwnedChecked = HaveibeenpwnedCheckBox.IsChecked ?? false;
+            bool isDehashedChecked = DehashedCheckBox.IsChecked ?? false;
+
+            // all textboxes (except for email) are in the same grid named 'TextBoxesGrid'
+            foreach (var control in TextBoxesGrid.Children)
+            {
+                if (control is TextBox textBox)
+                {
+                    EmailTextBox.IsEnabled = true;
+                    // Default to disabled
+                    textBox.IsEnabled = false;
+
+                    // when both are checked, all textboxes should be enabled
+                    if (isHaveibeenpwnedChecked && isDehashedChecked)
+                    {
+                        textBox.IsEnabled = true;
+                    }
+                    // when Dehashed is checked and Haveibeenpwned is unchecked, all textboxes excluding "Breach date" should be enabled
+                    else if (isDehashedChecked && !isHaveibeenpwnedChecked)
+                    {
+                        if (textBox.Name != "BreachDateTextBox")
+                        {
+                            textBox.IsEnabled = true;
+                        }
+                    }
+                    // when Dehashed is unchecked and Haveibeenpwned is checked, only email, password, and breach date should be enabled
+                    else if (!isDehashedChecked && isHaveibeenpwnedChecked)
+                    {
+                        if (textBox.Name == "EmailTextBox" || textBox.Name == "PasswordTextBox" || textBox.Name == "BreachDateTextBox")
+                        {
+                            textBox.IsEnabled = true;
+                        }
+                    }
+                    // when neither is checked, none should be enabled (already set to false by default at the start of the loop)
+                    else
+                    {
+                        EmailTextBox.IsEnabled = false;
+                    }
+                }
+            }
+        }
     }
 }

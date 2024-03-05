@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="Osint Support Tool" Height="450" Width="900"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanResizeWithGrip">
+        ResizeMode="CanResizeWithGrip"
+        Loaded="Window_Loaded">
 
     <ScrollViewer>
         <Border Background="{StaticResource BorderBackgroundColor}"
@@ -36,18 +37,18 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                    
-                        <StackPanel Grid.Row="0" Margin="5">
+
+                            <StackPanel Grid.Row="0" Margin="5">
                                 <Label Content="Email"                     
                                         Background="{StaticResource MenuBackgroundColor}"
                                         FontWeight="Bold"
                                         FontStyle="Italic"
                                         FontSize="20" 
                                        HorizontalAlignment="Center"/>
-                            <TextBox HorizontalAlignment="Stretch" Margin="0,5,0,10"/>
-                        </StackPanel>
-
-                            <Grid Grid.Row="1">
+                                <TextBox x:Name="EmailTextBox" HorizontalAlignment="Stretch" Margin="0,5,0,10"/>
+                            </StackPanel>
+                        
+                            <Grid Grid.Row="1" x:Name="TextBoxesGrid">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
@@ -65,40 +66,40 @@
                             </Grid.ColumnDefinitions>
 
                                 <Label Content="Username" Grid.Row="0" Grid.Column="0" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
-                            <TextBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" Margin="5"/>
+                                <TextBox x:Name="UsernameTextBox" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" Margin="5"/>
 
                                 <Label Content="Password" Grid.Row="0" Grid.Column="1" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
-                            <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5"/>
+                                <TextBox x:Name="PasswordTextBox" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5"/>
 
                                 <Label Content="Phone" Grid.Row="0" Grid.Column="2" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
-                            <TextBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"/>
+                                <TextBox x:Name="PhoneTextBox" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"/>
 
                                 <Label Content="Adress" Grid.Row="2" Grid.Column="0" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
-                            <TextBox Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" Margin="5"/>
+                                <TextBox x:Name="AdressTextBox" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" Margin="5"/>
 
                                 <Label Content="HashedPassword" Grid.Row="2" Grid.Column="1" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
-                            <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5"/>
+                                <TextBox x:Name="HashedPasswordTextBox" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5"/>
 
                                 <Label Content="HashType" Grid.Row="2" Grid.Column="2" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
-                            <TextBox Grid.Row="3" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"/>
+                                <TextBox x:Name="HashTypeTextBox" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"/>
 
                                 <Label Content="Name" Grid.Row="4" Grid.Column="0" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
-                            <TextBox Grid.Row="5" Grid.Column="0" HorizontalAlignment="Stretch" Margin="5"/>
+                                <TextBox x:Name="NameTextBox" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Stretch" Margin="5"/>
 
                                 <Label Content="Id" Grid.Row="4" Grid.Column="1" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
-                            <TextBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5"/>
+                                <TextBox x:Name="IdTextBox" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5"/>
 
                                 <Label Content="Ip Adress" Grid.Row="4" Grid.Column="2" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
-                            <TextBox Grid.Row="5" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"/>
+                                <TextBox x:Name="IpAdressTextBox" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"/>
 
                                 <Label Content="Vin" Grid.Row="6" Grid.Column="0" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
-                            <TextBox Grid.Row="7" Grid.Column="0" HorizontalAlignment="Stretch" Margin="5"/>
+                                <TextBox x:Name="VinTextBox" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Stretch" Margin="5"/>
 
                                 <Label Content="Database name" Grid.Row="6" Grid.Column="1" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
-                            <TextBox Grid.Row="7" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5"/>
+                                <TextBox x:Name="DatabaseNameTextBox"  Grid.Row="7" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5"/>
 
                                 <Label Content="Breach date" Grid.Row="6" Grid.Column="2" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
-                            <TextBox Grid.Row="7" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"/>
+                                <TextBox x:Name="BreachDateTextBox" Grid.Row="7" Grid.Column="2" HorizontalAlignment="Stretch" Margin="5"/>
 
                         </Grid>
 
@@ -139,9 +140,9 @@
 
                     <Label Grid.Row="0" Content="Search engines:" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="20" HorizontalAlignment="Center"/>
 
-                    <CheckBox Grid.Row="1" Content="Haveibeenpwned" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="15" HorizontalAlignment="Left"/>
+                    <CheckBox  x:Name="HaveibeenpwnedCheckBox" Grid.Row="1" Content="Haveibeenpwned" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="15" HorizontalAlignment="Left" IsChecked="True" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
 
-                    <CheckBox Grid.Row="2" Content="Dehashed" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="15" HorizontalAlignment="Left"/>
+                    <CheckBox  x:Name="DehashedCheckBox" Grid.Row="2" Content="Dehashed" Background="{StaticResource MenuBackgroundColor}" FontWeight="Bold" FontStyle="Italic" FontSize="15" HorizontalAlignment="Left" IsChecked="True" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
 
                     <Expander Grid.Row="3" x:Name="expander1"
                           Header="About 'Search options'"
