@@ -178,159 +178,210 @@ namespace Osint_WPF
                 {
                     // when both are checked, all textboxes should be enabled
 
-                    //UserData.Email
-                    //string hibp_ApiKey = Environment.GetEnvironmentVariable("hibp_ApiKey");
-                    //string leak_search = "email:\"" + UserData.Email + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //var (breaches, pastes) = await HaveIBeenPwned.CheckIfEmailHasBeenPwned(UserData.Email, hibp_ApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.Email);
-                    //PrintExistingBreachesPastes(UserData.Email, breaches, pastes);
+                    if(UserData.Email!="" && UserData.Email !=null)
+                    {
+                        //string hibp_ApiKey = Environment.GetEnvironmentVariable("hibp_ApiKey");
+                        //string leak_search = "email:\"" + UserData.Email + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //var (breaches, pastes) = await HaveIBeenPwned.CheckIfEmailHasBeenPwned(UserData.Email, hibp_ApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.Email);
+                        //PrintExistingBreachesPastes(UserData.Email, breaches, pastes);
+                    }
 
                     //Thread.Sleep(6000);
 
-                    //UserData.Username
-                    //string leak_search = "username:\"" + UserData.Username + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.Username);
+                    if (UserData.Username != "" && UserData.Username != null)
+                    {
+                        //string leak_search = "username:\"" + UserData.Username + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.Username);
+                    }
 
-                    //UserData.Password
-                    //string leak_search = "password:\"" + UserData.Password + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //var pwnedHashes = await HaveIBeenPwned.CheckIfPasswordHasBeenPwned(UserData.Password);
-                    //Thread.Sleep(6000);
-                    //PrintExistingDehashedData(leakedEntries, UserData.Password);
-                    //PrintExistingPwnedHashes(pwnedHashes);
+                    if (UserData.Password != "" && UserData.Password != null)
+                    {
+                        //string leak_search = "password:\"" + UserData.Password + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //var pwnedHashes = await HaveIBeenPwned.CheckIfPasswordHasBeenPwned(UserData.Password);
+                        //Thread.Sleep(6000);
+                        //PrintExistingDehashedData(leakedEntries, UserData.Password);
+                        //PrintExistingPwnedHashes(pwnedHashes);
+                    }
 
-                    //UserData.Phone
-                    //string leak_search = "phone:\"" + UserData.Phone + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.Phone);
+                    if (UserData.Phone != "" && UserData.Phone != null)
+                    {
+                        //string leak_search = "phone:\"" + UserData.Phone + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.Phone);
+                    }
 
-                    //UserData.Address
-                    //string leak_search = "address:\"" + UserData.Address + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.Address);
+                    if (UserData.Address != "" && UserData.Address != null)
+                    {
+                        //string leak_search = "address:\"" + UserData.Address + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.Address);
+                    }
 
-                    //UserData.HashedPassword
-                    //string leak_search = "hashed_password:\"" + UserData.HashedPassword + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.HashedPassword);
+                    if (UserData.HashedPassword != "" && UserData.HashedPassword != null)
+                    {
+                        //string leak_search = "hashed_password:\"" + UserData.HashedPassword + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.HashedPassword);
+                    }
 
-                    //UserData.HashType
-                    //string leak_search = "hash_type:\"" + UserData.HashType + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.HashType);
+                    if (UserData.HashType != "" && UserData.HashType != null)
+                    {
+                        //string leak_search = "hash_type:\"" + UserData.HashType + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.HashType);
+                    }
 
-                    //UserData.Name
-                    //string leak_search = "name:\"" + UserData.Name + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.Name);
+                    if (UserData.Name != "" && UserData.Name != null)
+                    {
+                        //string leak_search = "name:\"" + UserData.Name + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.Name);
+                    }
 
-                    //UserData.Id
-                    //string leak_search = "id:\"" + UserData.Id + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.Id);
+                    if (UserData.Id != "" && UserData.Id != null)
+                    {
+                        //string leak_search = "id:\"" + UserData.Id + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.Id);
+                    }
 
-                    //UserData.IpAddress
-                    //string leak_search = "ip_address:\"" + UserData.IpAddress + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.IpAddress);
+                    if (UserData.IpAddress != "" && UserData.IpAddress != null)
+                    {
+                        //string leak_search = "ip_address:\"" + UserData.IpAddress + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.IpAddress);
+                    }
 
-                    //UserData.Vin
-                    //string leak_search = "vin:\"" + UserData.Vin + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.Vin);
+                    if (UserData.Vin != "" && UserData.Vin != null)
+                    {
+                        //string leak_search = "vin:\"" + UserData.Vin + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.Vin);
+                    }
 
-                    //UserData.DatabaseName
-                    //string leak_search = "database_name:\"" + UserData.DatabaseName + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.DatabaseName);
-
+                    if (UserData.DatabaseName != "" && UserData.DatabaseName != null)
+                    {
+                        //string leak_search = "database_name:\"" + UserData.DatabaseName + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.DatabaseName);
+                    }
                 }
                 else if (UserData.DehashedChecked && !UserData.HaveIBeenPwnedChecked)
                 {
                     // when Dehashed checked and haveibeenpwned unechecked
 
-                    //UserData.Email
-                    //string leak_search = "email:\"" + UserData.Email + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.Email);
+                    if (UserData.Email != "" && UserData.Email != null)
+                    {
+                        //string leak_search = "email:\"" + UserData.Email + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.Email);
+                    }
 
-                    //UserData.Username
-                    //string leak_search = "username:\"" + UserData.Username + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.Username);
+                    if (UserData.Username != "" && UserData.Username != null)
+                    {
+                        //string leak_search = "username:\"" + UserData.Username + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.Username);
+                    }
 
-                    //UserData.Password
-                    //string leak_search = "password:\"" + UserData.Password + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.Password);
+                    if (UserData.Password != "" && UserData.Password != null)
+                    {
+                        //string leak_search = "password:\"" + UserData.Password + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.Password);
+                    }
 
-                    //UserData.Phone
-                    //string leak_search = "phone:\"" + UserData.Phone + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.Phone);
+                    if (UserData.Phone != "" && UserData.Phone != null)
+                    {
+                        //string leak_search = "phone:\"" + UserData.Phone + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.Phone);
+                    }
 
-                    //UserData.Address
-                    //string leak_search = "address:\"" + UserData.Address + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.Address);
+                    if (UserData.Address != "" && UserData.Address != null)
+                    {
+                        //string leak_search = "address:\"" + UserData.Address + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.Address);
+                    }
 
-                    //UserData.HashedPassword
-                    //string leak_search = "hashed_password:\"" + UserData.HashedPassword + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.HashedPassword);
+                    if (UserData.HashedPassword != "" && UserData.HashedPassword != null)
+                    {
+                        //string leak_search = "hashed_password:\"" + UserData.HashedPassword + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.HashedPassword);
+                    }
 
-                    //UserData.HashType
-                    //string leak_search = "hash_type:\"" + UserData.HashType + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.HashType);
+                    if (UserData.HashType != "" && UserData.HashType != null)
+                    {
+                        //string leak_search = "hash_type:\"" + UserData.HashType + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.HashType);
+                    }
 
-                    //UserData.Name
-                    //string leak_search = "name:\"" + UserData.Name + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.Name);
+                    if (UserData.Name != "" && UserData.Name != null)
+                    {
+                        //string leak_search = "name:\"" + UserData.Name + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.Name);
+                    }
 
-                    //UserData.Id
-                    //string leak_search = "id:\"" + UserData.Id + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.Id);
+                    if (UserData.Id != "" && UserData.Id != null)
+                    {
+                        //string leak_search = "id:\"" + UserData.Id + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.Id);
+                    }
 
-                    //UserData.IpAddress
-                    //string leak_search = "ip_address:\"" + UserData.IpAddress + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.IpAddress);
+                    if (UserData.IpAddress != "" && UserData.IpAddress != null)
+                    {
+                        //string leak_search = "ip_address:\"" + UserData.IpAddress + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.IpAddress);
+                    }
 
-                    //UserData.Vin
-                    //string leak_search = "vin:\"" + UserData.Vin + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.Vin);
+                    if (UserData.Vin != "" && UserData.Vin != null)
+                    {
+                        //string leak_search = "vin:\"" + UserData.Vin + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.Vin);
+                    }
 
-                    //UserData.DatabaseName
-                    //string leak_search = "database_name:\"" + UserData.DatabaseName + "\"";
-                    //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-                    //PrintExistingDehashedData(leakedEntries, UserData.DatabaseName);
+                    if (UserData.DatabaseName != "" && UserData.DatabaseName != null)
+                    {
+                        //string leak_search = "database_name:\"" + UserData.DatabaseName + "\"";
+                        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+                        //PrintExistingDehashedData(leakedEntries, UserData.DatabaseName);
+                    }
                 }
                 else if (!UserData.DehashedChecked && UserData.HaveIBeenPwnedChecked)
                 {
                     // when Dehashed is unchecked and Haveibeenpwned is checked, only email, password, and breach date should be enabled
 
-                    //UserData.Email
-                    //string hibp_ApiKey = Environment.GetEnvironmentVariable("hibp_ApiKey");
-                    //var (breaches, pastes) = await HaveIBeenPwned.CheckIfEmailHasBeenPwned(UserData.Email, hibp_ApiKey, apiName);
-                    //PrintExistingBreachesPastes(UserData.Email, breaches, pastes);
+                    if (UserData.Email != "" && UserData.Email != null)
+                    {
+                        //string hibp_ApiKey = Environment.GetEnvironmentVariable("hibp_ApiKey");
+                        //var (breaches, pastes) = await HaveIBeenPwned.CheckIfEmailHasBeenPwned(UserData.Email, hibp_ApiKey, apiName);
+                        //PrintExistingBreachesPastes(UserData.Email, breaches, pastes);
+                    }
 
                     //Thread.Sleep(6000);
 
-                    //UserData.Password
-                    //var pwnedHashes = await HaveIBeenPwned.CheckIfPasswordHasBeenPwned(UserData.Password);
-                    //PrintExistingPwnedHashes(pwnedHashes);
+                    if (UserData.Password != "" && UserData.Password != null)
+                    {
+                        //var pwnedHashes = await HaveIBeenPwned.CheckIfPasswordHasBeenPwned(UserData.Password);
+                        //PrintExistingPwnedHashes(pwnedHashes);
+                    }
                 }
                 else
                 {
                     // when neither is checked
 
-                    //nothing to do
+                    // nothing to do
                 }
 
                 return "";
