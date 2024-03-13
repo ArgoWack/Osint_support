@@ -1,92 +1,95 @@
-﻿using System.Collections.ObjectModel;
+﻿using Osint_WPF.Model;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
-using Osint_WPF.Model;
 
 namespace Osint_WPF.ViewModel
 {
     public class HaveIBeenPwnedViewModel : INotifyPropertyChanged
     {
-        private readonly HaveIBeenPwned haveIBeenPwnedService;
+        private readonly HaveIBeenPwned hibpService;
 
         public ObservableCollection<HaveIBeenPwned.Breach> Breaches { get; } = new ObservableCollection<HaveIBeenPwned.Breach>();
         public ObservableCollection<HaveIBeenPwned.Paste> Pastes { get; } = new ObservableCollection<HaveIBeenPwned.Paste>();
+        public ObservableCollection<string> PwnedPasswords { get; } = new ObservableCollection<string>();
 
-        private string _email;
-        public string Email
+        public ICommand CheckEmailCommand { get; private set; }
+        public ICommand CheckPasswordCommand { get; private set; }
+
+        public HaveIBeenPwnedViewModel(string myApiName, string apiKey)
         {
-            get => _email;
-            set
-            {
-                _email = value;
-                OnPropertyChanged(nameof(Email));
-            }
+            hibpService = new HaveIBeenPwned(myApiName, apiKey);
+            CheckEmailCommand = new AsyncCommand(async (email) => await CheckEmailAsync(email as string));
+            CheckPasswordCommand = new AsyncCommand(async (password) => await CheckPasswordAsync(password as string));
         }
 
-        private ObservableCollection<string> _pwnedPasswords = new ObservableCollection<string>();
-        public ObservableCollection<string> PwnedPasswords
+        public async Task<string> CheckEmailAsync(string email)
         {
-            get => _pwnedPasswords;
-            set
+            if (string.IsNullOrWhiteSpace(email)) return "Invalid email.";
+
+            StringBuilder resultsBuilder = new StringBuilder();
+            try
             {
-                _pwnedPasswords = value;
-                OnPropertyChanged(nameof(PwnedPasswords));
-            }
-        }
-
-        public ICommand CheckEmailCommand { get; }
-
-        public HaveIBeenPwnedViewModel(string hibpApiKey, string myApiName, string apiKey)
-        {
-            // initializes HaveIBeenPwned with API key and app name
-            haveIBeenPwnedService = new HaveIBeenPwned(hibpApiKey, myApiName, apiKey);
-
-
-            CheckEmailCommand = new AsyncCommand(async (param) => await ExecuteCheckEmailCommand(param), CanExecuteCheckEmailCommand);
-            CheckPasswordCommand = new AsyncCommand(async (param) => await ExecuteCheckPasswordCommand(param));
-        }
-
-        private bool CanExecuteCheckEmailCommand(object parameter) => !string.IsNullOrWhiteSpace(Email);
-
-        private async Task ExecuteCheckEmailCommand(object parameter)
-        {
-            var (breaches, pastes) = await haveIBeenPwnedService.CheckIfEmailHasBeenPwned(Email);
-
-            Breaches.Clear();
-            foreach (var breach in breaches)
-            {
-                Breaches.Add(breach);
-            }
-
-            Pastes.Clear();
-            foreach (var paste in pastes)
-            {
-                Pastes.Add(paste);
-            }
-        }
-
-        public ICommand CheckPasswordCommand { get; }
-
-        private async Task ExecuteCheckPasswordCommand(object parameter)
-        {
-            var password = parameter as string;
-
-            if (!string.IsNullOrWhiteSpace(password))
-            {
-                var pwnedHashes = await haveIBeenPwnedService.CheckIfPasswordHasBeenPwned(password);
-                PwnedPasswords.Clear();
-                foreach (var hash in pwnedHashes)
+                var (breaches, pastes) = await hibpService.CheckIfEmailHasBeenPwned(email);
+                Breaches.Clear();
+                Pastes.Clear();
+                foreach (var breach in breaches)
                 {
-                    PwnedPasswords.Add(hash);
+                    Breaches.Add(breach);
+                    resultsBuilder.AppendLine($"Breach: {breach.Name}");
+                }
+                foreach (var paste in pastes)
+                {
+                    Pastes.Add(paste);
+                    resultsBuilder.AppendLine($"Paste: {paste.Source}");
                 }
             }
+            catch (Exception ex)
+            {
+                resultsBuilder.AppendLine($"Error: {ex.Message}");
+            }
+
+            return resultsBuilder.ToString();
         }
 
+        public async Task<string> CheckPasswordAsync(string password)
+        {
+            if (string.IsNullOrWhiteSpace(password)) return "Invalid password.";
+
+            StringBuilder resultsBuilder = new StringBuilder();
+            try
+            {
+                var pwnedHashes = await hibpService.CheckIfPasswordHasBeenPwned(password);
+                PwnedPasswords.Clear();
+                if (pwnedHashes.Any())
+                {
+                    foreach (var hash in pwnedHashes)
+                    {
+                        PwnedPasswords.Add(hash);
+                        resultsBuilder.AppendLine($"Pwned hash: {hash}");
+                    }
+                }
+                else
+                {
+                    resultsBuilder.AppendLine("Password not found in any breach.");
+                }
+            }
+            catch (Exception ex)
+            {
+                resultsBuilder.AppendLine($"Error: {ex.Message}");
+            }
+            return resultsBuilder.ToString();
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

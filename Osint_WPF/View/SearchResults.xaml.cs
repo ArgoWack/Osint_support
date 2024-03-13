@@ -19,9 +19,24 @@ namespace Osint_WPF.View
     /// </summary>
     public partial class SearchResults : Window
     {
-        public SearchResults()
+        private string _resultsText;
+        public SearchResults(string resultsText)
         {
             InitializeComponent();
+            _resultsText = resultsText;
+            DisplayResultsInRichTextBox(_resultsText);
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            DisplayResultsInRichTextBox(_resultsText);
+        }
+        private void DisplayResultsInRichTextBox(string resultsText)
+        {
+            var paragraph = new Paragraph();
+            paragraph.Inlines.Add(new Run(resultsText));
+            ResultsRichTextBox.Document.Blocks.Clear();
+            ResultsRichTextBox.Document.Blocks.Add(paragraph);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -30,6 +45,11 @@ namespace Osint_WPF.View
             var BeginDataSearch = new BeginDataSearch();
             BeginDataSearch.Show();
             this.Close();
+        }
+
+        private void RichTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // place for results to be displayed
         }
     }
 }

@@ -31,7 +31,7 @@
                HorizontalAlignment="Center">
                 </Label>
 
-                <RichTextBox Grid.Row="1"> </RichTextBox>
+                <RichTextBox Grid.Row="1" x:Name="ResultsRichTextBox" TextChanged="RichTextBox_TextChanged"> </RichTextBox>
 
                 <Button Grid.Row="2"
                 Content="Return"

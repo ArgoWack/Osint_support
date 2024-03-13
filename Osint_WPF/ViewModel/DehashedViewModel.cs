@@ -1,53 +1,111 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Osint_WPF.Model;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using static Osint_WPF.BeginDataSearch;
 
 namespace Osint_WPF.ViewModel
 {
-    public class DehashedViewModel : INotifyPropertyChanged
+    public class DehashedViewModel
     {
-        private ObservableCollection<Model.Dehashed.Entry> _entries;
-        public ObservableCollection<Model.Dehashed.Entry> Entries
+        public readonly Dehashed dehashedService;
+
+        public ObservableCollection<Dehashed.Entry> Entries { get; private set; } = new ObservableCollection<Dehashed.Entry>();
+        public ICommand SearchCommand { get; private set; }
+
+        public DehashedViewModel(string dehashedApiUsername, string dehashedApiKey, string myApiName)
         {
-            get => _entries;
-            set
+            dehashedService = new Dehashed(dehashedApiUsername, dehashedApiKey, myApiName);
+            SearchCommand = new AsyncCommand(async (param) => await ExecuteSearchAsync(param as UserData));
+        }
+
+        public async Task<string> ExecuteSearchAsync(UserData userData)
+        {
+            if (userData == null) return "User data is null.";
+
+            StringBuilder resultsBuilder = new StringBuilder();
+            if (userData.DehashedChecked)
             {
-                _entries = value;
-                OnPropertyChanged(nameof(Entries));
+                var queryTasks = BuildDehashedTasks(userData);
+                var results = await Task.WhenAll(queryTasks);
+
+                Entries.Clear();
+                foreach (var result in results.SelectMany(r => r))
+                {
+                    Entries.Add(result);                    
+                    resultsBuilder.AppendLine(result.ToString());
+                }
             }
+
+            return resultsBuilder.ToString();
         }
 
-        // ICommand implementation to trigger search
-        public ICommand SearchCommand { get; }
-
-        public DehashedViewModel()
+        private IEnumerable<Task<IEnumerable<Dehashed.Entry>>> BuildDehashedTasks(UserData userData)
         {
-            Entries = new ObservableCollection<Model.Dehashed.Entry>();
-            SearchCommand = new AsyncCommand(async (param) => await ExecuteSearchAsync(null));
-        }
+            var tasks = new List<Task<IEnumerable<Dehashed.Entry>>>();
 
-        private async Task ExecuteSearchAsync(object parameter)
-        {
-            //parameter is the search query
-            var data = parameter.ToString();
-            var results = await Model.Dehashed.CheckIfDataHasBeenLeaked(data);
-            Entries.Clear();
-            foreach (var entry in results)
+            if (!string.IsNullOrWhiteSpace(userData.Email))
             {
-                Entries.Add(entry);
+                var task = dehashedService.CheckIfDataHasBeenLeaked($"email:\"{userData.Email}\"").ContinueWith(t => t.Result.AsEnumerable());
+                tasks.Add(task);
             }
-        }
-
-        // INotifyPropertyChanged implementation
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (!string.IsNullOrWhiteSpace(userData.Username))
+            {
+                var task = dehashedService.CheckIfDataHasBeenLeaked($"username:\"{userData.Username}\"").ContinueWith(t => t.Result.AsEnumerable());
+                tasks.Add(task);
+            }
+            if (!string.IsNullOrWhiteSpace(userData.Password))
+            {
+                var task = dehashedService.CheckIfDataHasBeenLeaked($"password:\"{userData.Password}\"").ContinueWith(t => t.Result.AsEnumerable());
+                tasks.Add(task);
+            }
+            if (!string.IsNullOrWhiteSpace(userData.Phone))
+            {
+                var task = dehashedService.CheckIfDataHasBeenLeaked($"phone:\"{userData.Phone}\"").ContinueWith(t => t.Result.AsEnumerable());
+                tasks.Add(task);
+            }
+            if (!string.IsNullOrWhiteSpace(userData.Address))
+            {
+                var task = dehashedService.CheckIfDataHasBeenLeaked($"address:\"{userData.Address}\"").ContinueWith(t => t.Result.AsEnumerable());
+                tasks.Add(task);
+            }
+            if (!string.IsNullOrWhiteSpace(userData.HashedPassword))
+            {
+                var task = dehashedService.CheckIfDataHasBeenLeaked($"hashedPassword:\"{userData.HashedPassword}\"").ContinueWith(t => t.Result.AsEnumerable());
+                tasks.Add(task);
+            }
+            if (!string.IsNullOrWhiteSpace(userData.HashType))
+            {
+                var task = dehashedService.CheckIfDataHasBeenLeaked($"hashType:\"{userData.HashType}\"").ContinueWith(t => t.Result.AsEnumerable());
+                tasks.Add(task);
+            }
+            if (!string.IsNullOrWhiteSpace(userData.Name))
+            {
+                var task = dehashedService.CheckIfDataHasBeenLeaked($"name:\"{userData.Name}\"").ContinueWith(t => t.Result.AsEnumerable());
+                tasks.Add(task);
+            }
+            if (!string.IsNullOrWhiteSpace(userData.Id))
+            {
+                var task = dehashedService.CheckIfDataHasBeenLeaked($"id:\"{userData.Id}\"").ContinueWith(t => t.Result.AsEnumerable());
+                tasks.Add(task);
+            }
+            if (!string.IsNullOrWhiteSpace(userData.IpAddress))
+            {
+                var task = dehashedService.CheckIfDataHasBeenLeaked($"ipAddress:\"{userData.IpAddress}\"").ContinueWith(t => t.Result.AsEnumerable());
+                tasks.Add(task);
+            }
+            if (!string.IsNullOrWhiteSpace(userData.Vin))
+            {
+                var task = dehashedService.CheckIfDataHasBeenLeaked($"vin:\"{userData.Vin}\"").ContinueWith(t => t.Result.AsEnumerable());
+                tasks.Add(task);
+            }
+            if (!string.IsNullOrWhiteSpace(userData.DatabaseName))
+            {
+                var task = dehashedService.CheckIfDataHasBeenLeaked($"databaseName:\"{userData.DatabaseName}\"").ContinueWith(t => t.Result.AsEnumerable());
+                tasks.Add(task);
+            }
+            return tasks;
         }
     }
 }

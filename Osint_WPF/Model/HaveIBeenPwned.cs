@@ -13,7 +13,7 @@ namespace Osint_WPF.Model
         private readonly HttpClient client = new HttpClient();
         private string apiKey;
 
-        public HaveIBeenPwned(string hibpApiKey, string myApiName, string apiKey)
+        public HaveIBeenPwned(string myApiName, string apiKey)
         {
             // adds the api key via header
             client.DefaultRequestHeaders.Add("hibp-api-key", apiKey);

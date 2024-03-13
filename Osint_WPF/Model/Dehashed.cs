@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -11,27 +10,20 @@ namespace Osint_WPF.Model
 {
     public class Dehashed
     {
-        //https://www.dehashed.com/docs
-        // up to 5 request a sec, meaning requests not more often than 200ms each
-
         private const string BaseUrl = "https://api.dehashed.com/search";
-        private static readonly HttpClient client=new HttpClient();
+        private readonly HttpClient client = new HttpClient();
 
         public Dehashed(string dehashedApiUsername, string dehashedApiKey, string myApiName)
         {
-            // constructs the auth header
-
             var authToken = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{dehashedApiUsername}:{dehashedApiKey}"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authToken);
             client.DefaultRequestHeaders.UserAgent.ParseAdd(myApiName);
             client.DefaultRequestHeaders.Accept.ParseAdd("application/json");
         }
 
-        public static async Task<List<Entry>> CheckIfDataHasBeenLeaked(string data)
+        public async Task<List<Entry>> CheckIfDataHasBeenLeaked(string data)
         {
             List<Entry> entries = new List<Entry>();
-
-            // prepares the request
             string url = $"{BaseUrl}?query={Uri.EscapeDataString(data)}";
 
             try
@@ -41,7 +33,6 @@ namespace Osint_WPF.Model
                 {
                     string content = await response.Content.ReadAsStringAsync();
                     var dehashedResponse = JsonSerializer.Deserialize<DehashedResponse>(content);
-
                     if (dehashedResponse?.Entries != null && dehashedResponse.Entries.Any())
                     {
                         entries.AddRange(dehashedResponse.Entries);
@@ -52,7 +43,7 @@ namespace Osint_WPF.Model
             {
                 throw;
 
-                // thinks to condiser:
+                // thinks to consider:
                 // - logging the exception
                 // Log.Error($"Error fetching data: {e.Message}");
                 // rethrowing the exception to be handled by the caller
