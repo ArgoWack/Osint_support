@@ -55,13 +55,38 @@ namespace Osint_WPF
         {
             //search
 
-            var userData = CollectUserData();
-            var searchResultsText = await UserData.CheckBreachesAsync(userData);
+            //prevents opening multiple forms at once
+            this.IsEnabled = false;
 
-            //opens SearchResults window and display results
-            var SearchResults = new SearchResults(searchResultsText);
-            SearchResults.Show();
-            this.Close();
+            //makes loadingbar stay above this window
+            var LoadingBar = new LoadingBar
+            {
+                Owner = this,
+                Topmost = true
+            };
+
+            LoadingBar.Show();
+
+            try
+            {
+                // starts search
+                var userData = CollectUserData();
+                var searchResultsText = await Task.Run(() => UserData.CheckBreachesAsync(userData)); // Ensure it runs on a background thread if not already
+
+                // opens the SearchResults window
+                var SearchResults = new SearchResults(searchResultsText);
+                SearchResults.Show();
+                this.Close(); // closes the current window
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
+            finally
+            {
+                // closes the loading bar window
+                LoadingBar.Close();
+            }
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -188,7 +213,7 @@ namespace Osint_WPF
 
             public static async Task<string> CheckBreachesAsync(UserData userData)
             {
-                // to be expanded, also no BreachDate considerd yet, locking resources, loadingbar to be done, logic to be finished
+                //potentialy add Lock and threading instead of hard Thread.Sleep?
 
                 //installed NuGet packed to be able to load sensitive data from .env file
                 DotEnv.Load();

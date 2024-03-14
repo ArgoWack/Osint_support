@@ -1,0 +1,23 @@
+﻿<Window x:Class="Osint_WPF.View.LoadingBar"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Osint_WPF"
+        mc:Ignorable="d"
+        Height="120" Width="300"
+        WindowStartupLocation="CenterScreen"
+        Title="Loading" WindowStyle="ToolWindow"
+        ResizeMode="CanResizeWithGrip">
+
+    <Border Background="{StaticResource BorderBackgroundColor}"
+                BorderBrush="{StaticResource BorderBrushColor}" 
+                BorderThickness="5" 
+                Padding="10"
+                CornerRadius="8,8,0,8">
+        <Grid>
+            <ProgressBar IsIndeterminate="True" Margin="10" />
+        </Grid>
+
+    </Border>
+</Window>
