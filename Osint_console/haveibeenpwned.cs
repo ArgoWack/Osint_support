@@ -144,6 +144,7 @@ namespace Osint_console
                     if (response.IsSuccessStatusCode)
                     {
                         string content = await response.Content.ReadAsStringAsync();
+                        WriteLine(content);
 
                         // splits each line in response
                         foreach (var line in content.Split('\n'))

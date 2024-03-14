@@ -29,7 +29,7 @@ namespace Osint_WPF.ViewModel
             CheckPasswordCommand = new AsyncCommand(async (password) => await CheckPasswordAsync(password as string));
         }
         //xyz@xyz.xyz
-        public async Task<string> CheckEmailAsync(string email)
+        public async Task<string> CheckEmailAsync(string email, DateTime? userBreachDate = null)
         {
             if (string.IsNullOrWhiteSpace(email)) return ""; // empty field
 
@@ -38,7 +38,7 @@ namespace Osint_WPF.ViewModel
             resultsBuilder.Append("Results for email: "+email+ "\n");
             try
             {
-                var (breaches, pastes) = await hibpService.CheckIfEmailHasBeenPwned(email);
+                var (breaches, pastes) = await hibpService.CheckIfEmailHasBeenPwned(email, userBreachDate);
 
                 Breaches.Clear();
                 Pastes.Clear();
@@ -54,7 +54,7 @@ namespace Osint_WPF.ViewModel
                 foreach (var paste in pastes)
                 {
                     Pastes.Add(paste);
-                    resultsBuilder.AppendLine($"Breach source: {paste.Source} id: {paste.Id} date: {paste.Date}");
+                    resultsBuilder.AppendLine($"Paste source: {paste.Source} id: {paste.Id} date: {paste.Date}");
                 }
             }
             catch (Exception ex)

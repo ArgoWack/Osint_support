@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net.Http;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -23,13 +25,24 @@ namespace Osint_WPF.Model
             client.DefaultRequestHeaders.UserAgent.ParseAdd(myApiName);
         }
 
-        public async Task<(List<Breach>, List<Paste>)> CheckIfEmailHasBeenPwned(string email)
+        public async Task<(List<Breach>, List<Paste>)> CheckIfEmailHasBeenPwned(string email, DateTime? userBreachDate = null)
         {
             var breaches = await CheckBreaches(email);
             // Respect API delay requirements
             await Task.Delay(6000);
             var pastes = await CheckPastes(email);
 
+            if (userBreachDate.HasValue)
+            {
+                breaches = breaches.Where(b => DateTime.Parse(b.BreachDate) >= userBreachDate.Value).ToList();
+                pastes = pastes.Where(p => {
+                    if (DateTime.TryParseExact(p.Date, "yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out DateTime parsedDate))
+                    {
+                        return parsedDate >= userBreachDate.Value;
+                    }
+                    return false;
+                }).ToList();
+            }
             return (breaches, pastes);
         }
 
@@ -98,6 +111,7 @@ namespace Osint_WPF.Model
             if (response.IsSuccessStatusCode)
             {
                 string content = await response.Content.ReadAsStringAsync();
+                //MessageBox.Show($"Raw JSON response content: {content}");
                 foreach (var line in content.Split('\n'))
                 {
                     var parts = line.Split(':');
@@ -138,6 +152,7 @@ namespace Osint_WPF.Model
         {
             public string Source { get; set; }
             public string Id { get; set; }
+            // ISO 8601 format
             public string Date { get; set; }
         }
     }

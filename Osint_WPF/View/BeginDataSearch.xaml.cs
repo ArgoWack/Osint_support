@@ -211,7 +211,7 @@ namespace Osint_WPF
                 {
                     var dehashedResults = await dehashedViewModel.ExecuteSearchAsync(userData);
                     resultsBuilder.Append(dehashedResults);
-                    var hibpResultsEmail = await haveIBeenPwnedViewModel.CheckEmailAsync(userData.Email);
+                    var hibpResultsEmail = await haveIBeenPwnedViewModel.CheckEmailAsync(userData.Email, userData.BreachDate);
                     resultsBuilder.Append(hibpResultsEmail);
                     var hibpResultsPassword = await haveIBeenPwnedViewModel.CheckPasswordAsync(userData.Password);
                     resultsBuilder.Append(hibpResultsPassword);
@@ -223,7 +223,7 @@ namespace Osint_WPF
                 }
                 else if (userData.HaveIBeenPwnedChecked)
                 {
-                    var hibpResultsEmail = await haveIBeenPwnedViewModel.CheckEmailAsync(userData.Email);
+                    var hibpResultsEmail = await haveIBeenPwnedViewModel.CheckEmailAsync(userData.Email, userData.BreachDate);
                     resultsBuilder.Append(hibpResultsEmail);
                     var hibpResultsPassword = await haveIBeenPwnedViewModel.CheckPasswordAsync(userData.Password);
                     resultsBuilder.Append(hibpResultsPassword);
