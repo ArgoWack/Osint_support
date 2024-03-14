@@ -21,6 +21,7 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="8*"/>
                     <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0"
@@ -34,13 +35,23 @@
                 <RichTextBox Grid.Row="1" x:Name="ResultsRichTextBox" TextChanged="RichTextBox_TextChanged"> </RichTextBox>
 
                 <Button Grid.Row="2"
+                Content="Save to PDF"
+                Background="{StaticResource MenuBackgroundColor}"
+                FontWeight="Bold"
+                FontStyle="Italic"
+                FontSize="20"
+                HorizontalAlignment="Stretch"
+                Click="Button_Click_1">
+                </Button>
+                
+                <Button Grid.Row="3"
                 Content="Return"
                 Background="{StaticResource MenuBackgroundColor}"
                 FontWeight="Bold"
                 FontStyle="Italic"
                 FontSize="20"
                 HorizontalAlignment="Stretch"
-                Click="Button_Click">
+                Click="Button_Click_2">
                 </Button>
             </Grid>
         </Border>
