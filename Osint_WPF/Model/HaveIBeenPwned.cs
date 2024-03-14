@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Osint_WPF.Model
 {
@@ -54,9 +56,8 @@ namespace Osint_WPF.Model
                     breachDataList.AddRange(breaches);
                     breachDataList = breaches.OrderByDescending(b => b.BreachDate).ToList();
                 }
-
                 return breachDataList ?? new List<Breach>();
-            }
+            }           
             return new List<Breach>();
         }
 
@@ -79,7 +80,6 @@ namespace Osint_WPF.Model
                 }
                 return pasteDataList ?? new List<Paste>();
             }
-
             return new List<Paste>();
         }
 
@@ -128,12 +128,12 @@ namespace Osint_WPF.Model
 
         public class Breach
         {
+            // properties which are going to be retrieved from breachdata in form of json with the same names
             public string Name { get; set; }
-            public string Title { get; set; }
-            public string Domain { get; set; }
-            public DateTime BreachDate { get; set; }
+            public string BreachDate { get; set; }
+            // helper property to convert BreachDate string to a DateTime object for easier sorting
+            public DateTime BreachDateTime => DateTime.Parse(BreachDate);
         }
-
         public class Paste
         {
             public string Source { get; set; }

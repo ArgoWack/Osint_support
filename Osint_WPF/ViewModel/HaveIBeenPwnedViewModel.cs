@@ -28,41 +28,49 @@ namespace Osint_WPF.ViewModel
             CheckEmailCommand = new AsyncCommand(async (email) => await CheckEmailAsync(email as string));
             CheckPasswordCommand = new AsyncCommand(async (password) => await CheckPasswordAsync(password as string));
         }
-
+        //xyz@xyz.xyz
         public async Task<string> CheckEmailAsync(string email)
         {
-            if (string.IsNullOrWhiteSpace(email)) return "Invalid email.";
+            if (string.IsNullOrWhiteSpace(email)) return ""; // empty field
 
             StringBuilder resultsBuilder = new StringBuilder();
+
+            resultsBuilder.Append("Results for email: "+email+ "\n");
             try
             {
                 var (breaches, pastes) = await hibpService.CheckIfEmailHasBeenPwned(email);
+
                 Breaches.Clear();
                 Pastes.Clear();
+                resultsBuilder.Append("Breaches: \n");
+
                 foreach (var breach in breaches)
                 {
                     Breaches.Add(breach);
-                    resultsBuilder.AppendLine($"Breach: {breach.Name}");
+                    resultsBuilder.AppendLine($"Breach name: {breach.Name} date: {breach.BreachDate}");
                 }
+
+                resultsBuilder.Append("Pastes: \n");
                 foreach (var paste in pastes)
                 {
                     Pastes.Add(paste);
-                    resultsBuilder.AppendLine($"Paste: {paste.Source}");
+                    resultsBuilder.AppendLine($"Breach source: {paste.Source} id: {paste.Id} date: {paste.Date}");
                 }
             }
             catch (Exception ex)
             {
                 resultsBuilder.AppendLine($"Error: {ex.Message}");
             }
-
             return resultsBuilder.ToString();
         }
 
         public async Task<string> CheckPasswordAsync(string password)
         {
-            if (string.IsNullOrWhiteSpace(password)) return "Invalid password.";
+            if (string.IsNullOrWhiteSpace(password)) return ""; // empty field
 
             StringBuilder resultsBuilder = new StringBuilder();
+
+            resultsBuilder.Append("Results for password: " + password + "\n");
             try
             {
                 var pwnedHashes = await hibpService.CheckIfPasswordHasBeenPwned(password);

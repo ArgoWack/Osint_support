@@ -145,10 +145,10 @@ class MainProgram
         //dummyPassword
         //string leak_search = "password:\"" + dummyPassword + "\"";
         //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-        //var pwnedHashes = await HaveIBeenPwned.CheckIfPasswordHasBeenPwned(dummyPassword);
+        var pwnedHashes = await HaveIBeenPwned.CheckIfPasswordHasBeenPwned(dummyPassword);
         //Thread.Sleep(6000);
         //PrintExistingDehashedData(leakedEntries, dummyPassword);
-        //PrintExistingPwnedHashes(pwnedHashes);
+        PrintExistingPwnedHashes(pwnedHashes);
 
         //dummyHashedPassword
         //string leak_search = "hashed_password:\"" + dummyHashedPassword + "\"";

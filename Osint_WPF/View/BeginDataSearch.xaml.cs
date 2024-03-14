@@ -57,10 +57,8 @@ namespace Osint_WPF
 
             var userData = CollectUserData();
             var searchResultsText = await UserData.CheckBreachesAsync(userData);
-            //loses data above
 
-            //opens SearchResults window and displays results
-            MessageBox.Show(searchResultsText.ToString()+"bb");
+            //opens SearchResults window and display results
             var SearchResults = new SearchResults(searchResultsText);
             SearchResults.Show();
             this.Close();
@@ -212,17 +210,23 @@ namespace Osint_WPF
                 if (userData.DehashedChecked && userData.HaveIBeenPwnedChecked)
                 {
                     var dehashedResults = await dehashedViewModel.ExecuteSearchAsync(userData);
+                    resultsBuilder.Append(dehashedResults);
                     var hibpResultsEmail = await haveIBeenPwnedViewModel.CheckEmailAsync(userData.Email);
+                    resultsBuilder.Append(hibpResultsEmail);
                     var hibpResultsPassword = await haveIBeenPwnedViewModel.CheckPasswordAsync(userData.Password);
+                    resultsBuilder.Append(hibpResultsPassword);
                 }
                 else if (userData.DehashedChecked)
                 {
                     var dehashedResults = await dehashedViewModel.ExecuteSearchAsync(userData);
+                    resultsBuilder.Append(dehashedResults);
                 }
                 else if (userData.HaveIBeenPwnedChecked)
                 {
                     var hibpResultsEmail = await haveIBeenPwnedViewModel.CheckEmailAsync(userData.Email);
+                    resultsBuilder.Append(hibpResultsEmail);
                     var hibpResultsPassword = await haveIBeenPwnedViewModel.CheckPasswordAsync(userData.Password);
+                    resultsBuilder.Append(hibpResultsPassword);
                 }
                 return resultsBuilder.ToString();
             }
