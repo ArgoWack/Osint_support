@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -28,7 +30,7 @@ namespace Osint_WPF.ViewModel
             CheckEmailCommand = new AsyncCommand(async (email) => await CheckEmailAsync(email as string));
             CheckPasswordCommand = new AsyncCommand(async (password) => await CheckPasswordAsync(password as string));
         }
-        //xyz@xyz.xyz
+
         public async Task<string> CheckEmailAsync(string email, DateTime? userBreachDate = null)
         {
             if (string.IsNullOrWhiteSpace(email)) return ""; // empty field
@@ -57,8 +59,19 @@ namespace Osint_WPF.ViewModel
                     resultsBuilder.AppendLine($"Paste source: {paste.Source} id: {paste.Id} date: {paste.Date}");
                 }
             }
+            catch (HttpRequestException httpEx)
+            {
+                // HTTP request error
+                resultsBuilder.AppendLine($"Network error: {httpEx.Message}");
+            }
+            catch (JsonException jsonEx)
+            {
+                //JSON parsing errors
+                resultsBuilder.AppendLine($"Data parsing error: {jsonEx.Message}");
+            }
             catch (Exception ex)
             {
+                //other errors
                 resultsBuilder.AppendLine($"Error: {ex.Message}");
             }
             return resultsBuilder.ToString();

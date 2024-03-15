@@ -48,80 +48,113 @@ namespace Osint_WPF.Model
 
         public async Task<List<Breach>> CheckBreaches(string email)
         {
-
-            // 'breachedaccount' checks if an account has been breached
-            // "?truncateResponse=false"" is essential for parsing BreachData
-
-            var url = $"https://haveibeenpwned.com/api/v3/breachedaccount/{Uri.EscapeDataString(email)}?truncateResponse=false";
-
-            // sends GET request to API
-            var response = await client.GetAsync(url);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                List<Breach> breachDataList = new List<Breach>();
+                // 'breachedaccount' checks if an account has been breached
+                // "?truncateResponse=false"" is essential for parsing BreachData
+                var url = $"https://haveibeenpwned.com/api/v3/breachedaccount/{Uri.EscapeDataString(email)}?truncateResponse=false";
 
-                var content = await response.Content.ReadAsStringAsync();
-                var breaches = JsonSerializer.Deserialize<List<Breach>>(content);
+                // sends GET request to API
+                var response = await client.GetAsync(url);
 
-                if (breaches != null)
+                if (response.IsSuccessStatusCode)
                 {
-                    breachDataList.AddRange(breaches);
-                    breachDataList = breaches.OrderByDescending(b => b.BreachDate).ToList();
+                    List<Breach> breachDataList = new List<Breach>();
+
+                    var content = await response.Content.ReadAsStringAsync();
+                    var breaches = JsonSerializer.Deserialize<List<Breach>>(content);
+
+                    if (breaches != null)
+                    {
+                        breachDataList.AddRange(breaches);
+                        breachDataList = breaches.OrderByDescending(b => b.BreachDate).ToList();
+                    }
+                    return breachDataList ?? new List<Breach>();
                 }
-                return breachDataList ?? new List<Breach>();
-            }           
-            return new List<Breach>();
+                else
+                {
+                    throw new HttpRequestException($"Request failed with status code: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An error occurred while checking for breaches.", ex);
+            }
         }
 
         public async Task<List<Paste>> CheckPastes(string email)
         {
-            var url = $"https://haveibeenpwned.com/api/v3/pasteaccount/{Uri.EscapeDataString(email)}";
-            var response = await client.GetAsync(url);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                List<Paste> pasteDataList = new List<Paste>();
+                var url = $"https://haveibeenpwned.com/api/v3/pasteaccount/{Uri.EscapeDataString(email)}";
+                var response = await client.GetAsync(url);
 
-                var content = await response.Content.ReadAsStringAsync();
-                var pastes = JsonSerializer.Deserialize<List<Paste>>(content);
-
-                if (pastes != null)
+                if (response.IsSuccessStatusCode)
                 {
-                    pasteDataList.AddRange(pastes);
-                    pasteDataList = pastes.OrderByDescending(p => p.Date).ToList();
-                }
+                    List<Paste> pasteDataList = new List<Paste>();
+
+                    var content = await response.Content.ReadAsStringAsync();
+                    var pastes = JsonSerializer.Deserialize<List<Paste>>(content);
+
+                    if (pastes != null)
+                    {
+                        pasteDataList.AddRange(pastes);
+                        pasteDataList = pastes.OrderByDescending(p => p.Date).ToList();
+                    }
                 return pasteDataList ?? new List<Paste>();
+                }
+                else
+                {
+                    throw new HttpRequestException($"Request failed with status code: {response.StatusCode}");
+                }
             }
-            return new List<Paste>();
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An error occurred while checking for pastes.", ex);
+            }
         }
 
         public async Task<List<string>> CheckIfPasswordHasBeenPwned(string password)
         {
-            // converts password to SHA-1 hash
-            string sha1Password = GetSha1Hash(password);
-            // takes first 5 characters to send to api
-            string hashPrefix = sha1Password.Substring(0, 5);
-            // api url
-            string url = $"https://api.pwnedpasswords.com/range/{hashPrefix}";
-
-            var response = await client.GetAsync(url);
-            var pwnedHashes = new List<string>();
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                string content = await response.Content.ReadAsStringAsync();
-                //MessageBox.Show($"Raw JSON response content: {content}");
-                foreach (var line in content.Split('\n'))
+                // converts password to SHA-1 hash
+                string sha1Password = GetSha1Hash(password);
+                // takes first 5 characters to send to api
+                string hashPrefix = sha1Password.Substring(0, 5);
+                // api url
+                string url = $"https://api.pwnedpasswords.com/range/{hashPrefix}";
+
+                var response = await client.GetAsync(url);
+                var pwnedHashes = new List<string>();
+
+                if (response.IsSuccessStatusCode)
                 {
-                    var parts = line.Split(':');
-                    if (parts[0].Equals(sha1Password.Substring(5), StringComparison.OrdinalIgnoreCase))
+                    string content = await response.Content.ReadAsStringAsync();
+                    foreach (var line in content.Split('\n'))
                     {
-                        pwnedHashes.Add(parts[0]);
+                        var parts = line.Split(':');
+                        if (parts[0].Equals(sha1Password.Substring(5), StringComparison.OrdinalIgnoreCase))
+                        {
+                            pwnedHashes.Add(parts[0]);
+                        }
                     }
                 }
+                else
+                {
+                    throw new HttpRequestException($"Request failed with status code: {response.StatusCode}");
+                }
+                return pwnedHashes;
             }
-            return pwnedHashes;
+            catch (HttpRequestException httpEx)
+            {
+                // HTTP request error
+                throw new ApplicationException($"Network error while checking password: {httpEx.Message}", httpEx);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An unexpected error occurred while checking the password.", ex);
+            }
         }
 
         private static string GetSha1Hash(string input)
@@ -152,6 +185,7 @@ namespace Osint_WPF.Model
         {
             public string Source { get; set; }
             public string Id { get; set; }
+
             // ISO 8601 format
             public string Date { get; set; }
         }
