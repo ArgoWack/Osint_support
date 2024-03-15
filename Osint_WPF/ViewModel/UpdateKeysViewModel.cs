@@ -14,32 +14,26 @@ namespace Osint_WPF.ViewModels
         private string _hibpApiKey;
         private string _dehashedUsername;
         private string _dehashedApiKey;
-
         public string HibpApiKey
         {
             get => _hibpApiKey;
             set => SetProperty(ref _hibpApiKey, value);
         }
-
         public string DehashedUsername
         {
             get => _dehashedUsername;
             set => SetProperty(ref _dehashedUsername, value);
         }
-
         public string DehashedApiKey
         {
             get => _dehashedApiKey;
             set => SetProperty(ref _dehashedApiKey, value);
         }
-
         public ICommand UpdateCommand { get; }
-
         public UpdateKeysViewModel()
         {
             UpdateCommand = new RelayCommand(ExecuteUpdateCommand);
         }
-
         private void ExecuteUpdateCommand()
         {
             // implements the logic to update the .env file based on the properties
@@ -56,7 +50,6 @@ namespace Osint_WPF.ViewModels
                 SaveInputToEnvFile(DehashedApiKey, "dehashedApiKey=");
             }
         }
-
         private void SaveInputToEnvFile(string userInput, string dotenvKey)
         {
             //.env file path

@@ -15,7 +15,7 @@
                 BorderThickness="5"
                 Padding="10"
                 CornerRadius="8,8,0,8">
-            
+
             <Grid VerticalAlignment="Stretch" Background="{StaticResource MenuBackgroundColor}">
 
                 <Grid.RowDefinitions>
@@ -104,7 +104,7 @@
                         <TextBlock Text="Browse data on other manual searches" Margin="5,0,0,0" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
-                
+
                 <Expander Grid.Row="6" x:Name="expander3"
                           Header="About 'Browse data on other manual searches'" 
                           Background="LightGray" 

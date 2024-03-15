@@ -20,7 +20,6 @@ namespace Osint_WPF.Model
             client.DefaultRequestHeaders.UserAgent.ParseAdd(myApiName);
             client.DefaultRequestHeaders.Accept.ParseAdd("application/json");
         }
-
         public async Task<List<Entry>> CheckIfDataHasBeenLeaked(string data)
         {
             List<Entry> entries = new List<Entry>();
@@ -48,16 +47,13 @@ namespace Osint_WPF.Model
                 // Log.Error($"Error fetching data: {e.Message}");
                 // rethrowing the exception to be handled by the caller
             }
-
             return entries;
         }
-
         public class DehashedResponse
         {
             public int Total { get; set; }
             public List<Entry> Entries { get; set; }
         }
-
         public class Entry
         {
             // Fields: id, email, ip_address, username, password, hashed_password, hash_type, name, vin, address, phone, database_name
@@ -76,4 +72,3 @@ namespace Osint_WPF.Model
         }
     }
 }
-

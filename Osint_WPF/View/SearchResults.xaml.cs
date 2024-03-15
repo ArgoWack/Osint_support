@@ -32,7 +32,6 @@ namespace Osint_WPF.View
             _resultsText = resultsText;
             DisplayResultsInRichTextBox(_resultsText);
         }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             DisplayResultsInRichTextBox(_resultsText);
@@ -44,12 +43,10 @@ namespace Osint_WPF.View
             ResultsRichTextBox.Document.Blocks.Clear();
             ResultsRichTextBox.Document.Blocks.Add(paragraph);
         }
-
         private void RichTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             // place for results to be displayed
         }
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             //save to pdf

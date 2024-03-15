@@ -23,7 +23,6 @@ namespace Osint_WPF
         {
             InitializeComponent();
         }
-
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             //Return button

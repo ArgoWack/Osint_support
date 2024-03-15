@@ -26,28 +26,23 @@ namespace Osint_WPF
             InitializeComponent();
             DataContext = new UpdateKeysViewModel();
         }
-
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             //haveibeenpwned api key to be received from user
         }
-
         private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
         {
             //dehashed username to be received from user
         }
-
         private void TextBox_TextChanged_2(object sender, TextChangedEventArgs e)
         {
             //dehashed api key to be received from user
         }
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             //Confirms changes overriting .env file unless no changes
             //logic handled in ViewModel
         }
-
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             //Return button
@@ -55,6 +50,5 @@ namespace Osint_WPF
             MainWindow.Show();
             this.Close();
         }
-
     }
 }

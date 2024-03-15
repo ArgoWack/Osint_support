@@ -19,7 +19,6 @@ namespace Osint_WPF.ViewModel
             dehashedService = new Dehashed(dehashedApiUsername, dehashedApiKey, myApiName);
             SearchCommand = new AsyncCommand(async (param) => await ExecuteSearchAsync(param as UserData));
         }
-
         public async Task<string> ExecuteSearchAsync(UserData userData)
         {
             if (userData == null) return "User data is null.";
@@ -37,10 +36,8 @@ namespace Osint_WPF.ViewModel
                     resultsBuilder.AppendLine(result.ToString());
                 }
             }
-
             return resultsBuilder.ToString();
         }
-
         private IEnumerable<Task<IEnumerable<Dehashed.Entry>>> BuildDehashedTasks(UserData userData)
         {
             var tasks = new List<Task<IEnumerable<Dehashed.Entry>>>();

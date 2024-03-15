@@ -27,7 +27,6 @@ namespace Osint_WPF
         {
             InitializeComponent();
         }
-
         private void Expander_Expanded(object sender, RoutedEventArgs e)
         {
             if (sender == expander1)
@@ -35,7 +34,6 @@ namespace Osint_WPF
                 expanderRow1.Height = GridLength.Auto;
             }
         }
-
         private void Expander_Collapsed(object sender, RoutedEventArgs e)
         {
             if (sender == expander1)
@@ -50,7 +48,6 @@ namespace Osint_WPF
             MainWindow.Show();
             this.Close();
         }
-
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
             //search
@@ -88,7 +85,6 @@ namespace Osint_WPF
                 LoadingBar.Close();
             }
         }
-
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             //clear
@@ -102,7 +98,6 @@ namespace Osint_WPF
                 }
             }
         }
-
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (this.IsLoaded)
@@ -110,7 +105,6 @@ namespace Osint_WPF
                 UpdateTextBoxesVisibility();
             }
         }
-
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             if (this.IsLoaded)
@@ -118,13 +112,11 @@ namespace Osint_WPF
                 UpdateTextBoxesVisibility();
             }
         }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // had to add this to prevent errors resulting from trying to acces UpdateTextBoxesVisibility before form was loaded
             UpdateTextBoxesVisibility();
         }
-
         public UserData CollectUserData()
         {
             return new UserData
@@ -181,7 +173,6 @@ namespace Osint_WPF
                             BreachDateDatePickerBox.IsEnabled = true;
                         }
                     }
-
                     else
                     {
                         // when neither is checked
@@ -192,7 +183,6 @@ namespace Osint_WPF
                 }
             }
         }
-
         public class UserData
         {
             public string Email { get; set; }

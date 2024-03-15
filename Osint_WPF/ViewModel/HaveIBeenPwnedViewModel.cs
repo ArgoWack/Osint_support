@@ -30,7 +30,6 @@ namespace Osint_WPF.ViewModel
             CheckEmailCommand = new AsyncCommand(async (email) => await CheckEmailAsync(email as string));
             CheckPasswordCommand = new AsyncCommand(async (password) => await CheckPasswordAsync(password as string));
         }
-
         public async Task<string> CheckEmailAsync(string email, DateTime? userBreachDate = null)
         {
             if (string.IsNullOrWhiteSpace(email)) return ""; // empty field
@@ -107,9 +106,7 @@ namespace Osint_WPF.ViewModel
             }
             return resultsBuilder.ToString();
         }
-
         public event PropertyChangedEventHandler PropertyChanged;
-
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

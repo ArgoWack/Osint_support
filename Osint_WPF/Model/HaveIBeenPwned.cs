@@ -24,7 +24,6 @@ namespace Osint_WPF.Model
             // set a user agent for identification purposes
             client.DefaultRequestHeaders.UserAgent.ParseAdd(myApiName);
         }
-
         public async Task<(List<Breach>, List<Paste>)> CheckIfEmailHasBeenPwned(string email, DateTime? userBreachDate = null)
         {
             var breaches = await CheckBreaches(email);
@@ -45,7 +44,6 @@ namespace Osint_WPF.Model
             }
             return (breaches, pastes);
         }
-
         public async Task<List<Breach>> CheckBreaches(string email)
         {
             try
@@ -81,7 +79,6 @@ namespace Osint_WPF.Model
                 throw new ApplicationException("An error occurred while checking for breaches.", ex);
             }
         }
-
         public async Task<List<Paste>> CheckPastes(string email)
         {
             try
@@ -113,7 +110,6 @@ namespace Osint_WPF.Model
                 throw new ApplicationException("An error occurred while checking for pastes.", ex);
             }
         }
-
         public async Task<List<string>> CheckIfPasswordHasBeenPwned(string password)
         {
             try
@@ -156,7 +152,6 @@ namespace Osint_WPF.Model
                 throw new ApplicationException("An unexpected error occurred while checking the password.", ex);
             }
         }
-
         private static string GetSha1Hash(string input)
         {
             using (var sha1 = new System.Security.Cryptography.SHA1Managed())
@@ -172,7 +167,6 @@ namespace Osint_WPF.Model
                 return sb.ToString();
             }
         }
-
         public class Breach
         {
             // properties which are going to be retrieved from breachdata in form of json with the same names
