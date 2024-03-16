@@ -12,6 +12,7 @@ namespace Osint_WPF.ViewModel
         public readonly Dehashed dehashedService;
 
         public ObservableCollection<Dehashed.Entry> Entries { get; private set; } = new ObservableCollection<Dehashed.Entry>();
+        public ObservableCollection<string> FormattedEntries { get; private set; } = new ObservableCollection<string>();
         public ICommand SearchCommand { get; private set; }
 
         public DehashedViewModel(string dehashedApiUsername, string dehashedApiKey, string myApiName)
@@ -19,24 +20,48 @@ namespace Osint_WPF.ViewModel
             dehashedService = new Dehashed(dehashedApiUsername, dehashedApiKey, myApiName);
             SearchCommand = new AsyncCommand(async (param) => await ExecuteSearchAsync(param as UserData));
         }
+        private static bool IsValidField(string field) => !string.IsNullOrEmpty(field) && !string.Equals(field, "NULL", StringComparison.OrdinalIgnoreCase);
         public async Task<string> ExecuteSearchAsync(UserData userData)
         {
             if (userData == null) return "User data is null.";
+            if (!userData.DehashedChecked) return "Dehashed search not enabled.";
 
-            StringBuilder resultsBuilder = new StringBuilder();
-            if (userData.DehashedChecked)
+            var queryTasks = BuildDehashedTasks(userData);
+            var results = await Task.WhenAll(queryTasks);
+
+            Entries.Clear();
+            FormattedEntries.Clear();
+            StringBuilder resultsSummary = new StringBuilder();
+
+            //resultsSummary.AppendLine($"Results for: {userData}\n");
+
+            foreach (var result in results.SelectMany(r => r))
             {
-                var queryTasks = BuildDehashedTasks(userData);
-                var results = await Task.WhenAll(queryTasks);
+                Entries.Add(result);
 
-                Entries.Clear();
-                foreach (var result in results.SelectMany(r => r))
+                List<string> nonEmptyFields = new List<string>();
+                if (IsValidField(result.Id)) nonEmptyFields.Add($"ID: {result.Id}");
+                if (IsValidField(result.Email)) nonEmptyFields.Add($"Email: {result.Email}");
+                if (IsValidField(result.Ip_address)) nonEmptyFields.Add($"Ip_address: {result.Ip_address}");
+                if (IsValidField(result.Username)) nonEmptyFields.Add($"Username: {result.Username}");
+                if (IsValidField(result.Password)) nonEmptyFields.Add($"Password: {result.Password}");
+                if (IsValidField(result.Hashed_password)) nonEmptyFields.Add($"Hashed_password: {result.Hashed_password}");
+                if (IsValidField(result.Hash_type)) nonEmptyFields.Add($"Hash_type: {result.Hash_type}");
+                if (IsValidField(result.Name)) nonEmptyFields.Add($"Name: {result.Name}");
+                if (IsValidField(result.Vin)) nonEmptyFields.Add($"Vin: {result.Vin}");
+                if (IsValidField(result.Address)) nonEmptyFields.Add($"Address: {result.Address}");
+                if (IsValidField(result.Phone)) nonEmptyFields.Add($"Phone: {result.Phone}");
+                if (IsValidField(result.Database_name)) nonEmptyFields.Add($"Database_name: {result.Database_name}");
+
+                string formattedEntry = string.Join(", ", nonEmptyFields);
+                if (!string.IsNullOrEmpty(formattedEntry))
                 {
-                    Entries.Add(result);                    
-                    resultsBuilder.AppendLine(result.ToString());
+                    FormattedEntries.Add(formattedEntry);
+                    resultsSummary.AppendLine(formattedEntry);
                 }
             }
-            return resultsBuilder.ToString();
+
+            return resultsSummary.Length > 0 ? resultsSummary.ToString() : "";
         }
         private IEnumerable<Task<IEnumerable<Dehashed.Entry>>> BuildDehashedTasks(UserData userData)
         {

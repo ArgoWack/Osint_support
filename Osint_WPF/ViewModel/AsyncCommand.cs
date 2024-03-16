@@ -9,6 +9,8 @@ namespace Osint_WPF.ViewModel
 {
     public class AsyncCommand : ICommand
     {
+        //required for running longer asycn tasks without blocking the UI
+
         private readonly Func<object, Task> _executeAsync;
         private readonly Predicate<object> _canExecute;
         private bool _isExecuting;

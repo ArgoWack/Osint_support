@@ -8,6 +8,8 @@ using System.Windows.Input;
 namespace Osint_WPF.ViewModels
 {    public class RelayCommand : ICommand
     {
+        // for sync operations contrary to async
+
         private readonly Action _execute;
         private readonly Func<bool> _canExecute;
 

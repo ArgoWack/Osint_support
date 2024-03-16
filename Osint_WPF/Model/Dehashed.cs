@@ -4,8 +4,10 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-
+using System.Windows;
+// string entryDetails = $"First Entry Details:\nEmail: {firstEntry.Email}, Username: {firstEntry.Username}, IP: {firstEntry.Ip_address}, Password: {firstEntry.Password}, Hashed Password: {firstEntry.Hashed_password}, Hash Type: {firstEntry.Hash_type}, Name: {firstEntry.Name}, Address: {firstEntry.Address}, Phone: {firstEntry.Phone}, Database Name: {firstEntry.Database_name}";
 namespace Osint_WPF.Model
 {
     public class Dehashed
@@ -34,41 +36,68 @@ namespace Osint_WPF.Model
                     var dehashedResponse = JsonSerializer.Deserialize<DehashedResponse>(content);
                     if (dehashedResponse?.Entries != null && dehashedResponse.Entries.Any())
                     {
-                        entries.AddRange(dehashedResponse.Entries);
+                        return dehashedResponse.Entries;
                     }
                 }
             }
             catch (HttpRequestException e)
             {
                 throw;
-
-                // thinks to consider:
-                // - logging the exception
-                // Log.Error($"Error fetching data: {e.Message}");
-                // rethrowing the exception to be handled by the caller
             }
             return entries;
         }
         public class DehashedResponse
         {
+            [JsonPropertyName("total")]
             public int Total { get; set; }
+
+            [JsonPropertyName("entries")]
             public List<Entry> Entries { get; set; }
         }
         public class Entry
         {
             // Fields: id, email, ip_address, username, password, hashed_password, hash_type, name, vin, address, phone, database_name
+
+            [JsonPropertyName("id")]
             public string Id { get; set; }
+
+            [JsonPropertyName("email")]
             public string Email { get; set; }
+
+            [JsonPropertyName("ip_address")]
             public string Ip_address { get; set; }
+
+            [JsonPropertyName("username")]
             public string Username { get; set; }
+
+            [JsonPropertyName("password")]
             public string Password { get; set; }
+
+            [JsonPropertyName("hashed_password")]
             public string Hashed_password { get; set; }
+
+            [JsonPropertyName("hash_type")]
             public string Hash_type { get; set; }
+
+            [JsonPropertyName("name")]
             public string Name { get; set; }
+
+            [JsonPropertyName("vin")]
             public string Vin { get; set; }
+
+            [JsonPropertyName("address")]
             public string Address { get; set; }
+
+            [JsonPropertyName("phone")]
             public string Phone { get; set; }
+
+            [JsonPropertyName("database_name")]
             public string Database_name { get; set; }
+
+            public override string ToString()
+            {
+                return $"Id: {Id}, Email: {Email}, Ip_address: {Ip_address}, Username: {Username},Password: {Password}, Hashed_password: {Hashed_password}, Hash_type: {Hash_type}, Name: {Name}, Vin: {Vin}, Address: {Address},Phone: {Phone}, Database_name: {Database_name}";
+            }
         }
     }
 }

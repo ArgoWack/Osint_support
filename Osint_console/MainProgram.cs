@@ -121,10 +121,10 @@ class MainProgram
 
         //dummyEmail
         //string hibp_ApiKey = Environment.GetEnvironmentVariable("hibp_ApiKey");
-        //string leak_search = "email:\"" + dummyEmail + "\"";
-        //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
+        string leak_search = "email:\"" + dummyEmail + "\"";
+        var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
         //var (breaches, pastes) = await HaveIBeenPwned.CheckIfEmailHasBeenPwned(dummyEmail, hibp_ApiKey, apiName);
-        //PrintExistingDehashedData(leakedEntries, dummyEmail);
+        PrintExistingDehashedData(leakedEntries, dummyEmail);
         //PrintExistingBreachesPastes(dummyEmail, breaches, pastes);
 
         //dummyId
@@ -145,10 +145,10 @@ class MainProgram
         //dummyPassword
         //string leak_search = "password:\"" + dummyPassword + "\"";
         //var leakedEntries = await Dehashed.CheckIfDataHasBeenLeaked(leak_search, dehashedApiUsername, dehashedApiKey, apiName);
-        var pwnedHashes = await HaveIBeenPwned.CheckIfPasswordHasBeenPwned(dummyPassword);
+        //var pwnedHashes = await HaveIBeenPwned.CheckIfPasswordHasBeenPwned(dummyPassword);
         //Thread.Sleep(6000);
         //PrintExistingDehashedData(leakedEntries, dummyPassword);
-        PrintExistingPwnedHashes(pwnedHashes);
+        //PrintExistingPwnedHashes(pwnedHashes);
 
         //dummyHashedPassword
         //string leak_search = "hashed_password:\"" + dummyHashedPassword + "\"";
