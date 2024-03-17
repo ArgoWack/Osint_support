@@ -7,7 +7,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
-// string entryDetails = $"First Entry Details:\nEmail: {firstEntry.Email}, Username: {firstEntry.Username}, IP: {firstEntry.Ip_address}, Password: {firstEntry.Password}, Hashed Password: {firstEntry.Hashed_password}, Hash Type: {firstEntry.Hash_type}, Name: {firstEntry.Name}, Address: {firstEntry.Address}, Phone: {firstEntry.Phone}, Database Name: {firstEntry.Database_name}";
 namespace Osint_WPF.Model
 {
     public class Dehashed

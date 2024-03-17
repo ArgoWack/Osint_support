@@ -26,42 +26,86 @@ namespace Osint_WPF.ViewModel
             if (userData == null) return "User data is null.";
             if (!userData.DehashedChecked) return "Dehashed search not enabled.";
 
-            var queryTasks = BuildDehashedTasks(userData);
-            var results = await Task.WhenAll(queryTasks);
+            var taskResultsWithTitles = BuildDehashedTasksWithTitles(userData);
+            var results = await Task.WhenAll(taskResultsWithTitles);
 
             Entries.Clear();
             FormattedEntries.Clear();
             StringBuilder resultsSummary = new StringBuilder();
 
-            //resultsSummary.AppendLine($"Results for: {userData}\n");
-
-            foreach (var result in results.SelectMany(r => r))
+            foreach (var resultWithTitle in results)
             {
-                Entries.Add(result);
-
-                List<string> nonEmptyFields = new List<string>();
-                if (IsValidField(result.Id)) nonEmptyFields.Add($"ID: {result.Id}");
-                if (IsValidField(result.Email)) nonEmptyFields.Add($"Email: {result.Email}");
-                if (IsValidField(result.Ip_address)) nonEmptyFields.Add($"Ip_address: {result.Ip_address}");
-                if (IsValidField(result.Username)) nonEmptyFields.Add($"Username: {result.Username}");
-                if (IsValidField(result.Password)) nonEmptyFields.Add($"Password: {result.Password}");
-                if (IsValidField(result.Hashed_password)) nonEmptyFields.Add($"Hashed_password: {result.Hashed_password}");
-                if (IsValidField(result.Hash_type)) nonEmptyFields.Add($"Hash_type: {result.Hash_type}");
-                if (IsValidField(result.Name)) nonEmptyFields.Add($"Name: {result.Name}");
-                if (IsValidField(result.Vin)) nonEmptyFields.Add($"Vin: {result.Vin}");
-                if (IsValidField(result.Address)) nonEmptyFields.Add($"Address: {result.Address}");
-                if (IsValidField(result.Phone)) nonEmptyFields.Add($"Phone: {result.Phone}");
-                if (IsValidField(result.Database_name)) nonEmptyFields.Add($"Database_name: {result.Database_name}");
-
-                string formattedEntry = string.Join(", ", nonEmptyFields);
-                if (!string.IsNullOrEmpty(formattedEntry))
+                if (!string.IsNullOrWhiteSpace(resultWithTitle.Title))
                 {
-                    FormattedEntries.Add(formattedEntry);
-                    resultsSummary.AppendLine(formattedEntry);
+                    resultsSummary.AppendLine(resultWithTitle.Title);
+                }
+
+                foreach (var result in resultWithTitle.Results)
+                {
+
+                    Entries.Add(result);
+
+                    List<string> nonEmptyFields = new List<string>();
+                    if (IsValidField(result.Id)) nonEmptyFields.Add($"ID: {result.Id}");
+                    if (IsValidField(result.Email)) nonEmptyFields.Add($"Email: {result.Email}");
+                    if (IsValidField(result.Ip_address)) nonEmptyFields.Add($"Ip_address: {result.Ip_address}");
+                    if (IsValidField(result.Username)) nonEmptyFields.Add($"Username: {result.Username}");
+                    if (IsValidField(result.Password)) nonEmptyFields.Add($"Password: {result.Password}");
+                    if (IsValidField(result.Hashed_password)) nonEmptyFields.Add($"Hashed_password: {result.Hashed_password}");
+                    if (IsValidField(result.Hash_type)) nonEmptyFields.Add($"Hash_type: {result.Hash_type}");
+                    if (IsValidField(result.Name)) nonEmptyFields.Add($"Name: {result.Name}");
+                    if (IsValidField(result.Vin)) nonEmptyFields.Add($"Vin: {result.Vin}");
+                    if (IsValidField(result.Address)) nonEmptyFields.Add($"Address: {result.Address}");
+                    if (IsValidField(result.Phone)) nonEmptyFields.Add($"Phone: {result.Phone}");
+                    if (IsValidField(result.Database_name)) nonEmptyFields.Add($"Database_name: {result.Database_name}");
+
+                    string formattedEntry = string.Join(", ", nonEmptyFields);
+                    if (!string.IsNullOrEmpty(formattedEntry))
+                    {
+                        FormattedEntries.Add(formattedEntry);
+                        resultsSummary.AppendLine(formattedEntry);
+                    }
+                }
+            }
+            return resultsSummary.Length > 0 ? resultsSummary.ToString() : "";
+        }
+        private IEnumerable<Task<TaskResultWithTitle>> BuildDehashedTasksWithTitles(UserData userData)
+        {
+            // defines dictionary which writes titles of searches before them
+            var tasks = new List<Task<TaskResultWithTitle>>();
+
+            var fieldMap = new Dictionary<string, (string value, string title)>
+    {
+        { "Id", (userData.Id, "Results for Id:") },
+        { "Email", (userData.Email, "Results for Email:") },
+        { "IpAddress", (userData.IpAddress, "Results for IpAddress:") },
+        { "Username", (userData.Username, "Results for Username:") },
+        { "Password", (userData.Password, "Results for Password:") },
+        { "HashedPassword", (userData.HashedPassword, "Results for HashedPassword:") },
+        { "HashType", (userData.HashType, "Results for HashType:") },
+        { "Name", (userData.Name, "Results for Name:") },
+        { "Vin", (userData.Vin, "Results for Vin:") },
+        { "Address", (userData.Address, "Results for Address:") },
+        { "Phone", (userData.Phone, "Results for Phone:") },
+        { "DatabaseName", (userData.DatabaseName, "Results for DatabaseName:") },
+    };
+
+            foreach (var field in fieldMap)
+            {
+                if (!string.IsNullOrWhiteSpace(field.Value.value))
+                {
+                    string queryValue = field.Key.ToLowerInvariant() + ":\"" + field.Value.value + "\"";
+                    var task = dehashedService.CheckIfDataHasBeenLeaked(queryValue)
+                        .ContinueWith(t => new TaskResultWithTitle
+                        {
+                            Title = field.Value.title + " " + field.Value.value,
+                            Results = t.Result
+                        });
+                    tasks.Add(task);
                 }
             }
 
-            return resultsSummary.Length > 0 ? resultsSummary.ToString() : "";
+            return tasks;
         }
         private IEnumerable<Task<IEnumerable<Dehashed.Entry>>> BuildDehashedTasks(UserData userData)
         {
@@ -129,5 +173,10 @@ namespace Osint_WPF.ViewModel
             }
             return tasks;
         }
+    }
+    public class TaskResultWithTitle
+    {
+        public string Title { get; set; }
+        public IEnumerable<Dehashed.Entry> Results { get; set; }
     }
 }
