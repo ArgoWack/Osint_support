@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using static Osint_WPF.BeginDataSearch;
 
 namespace Osint_WPF.ViewModel
@@ -26,8 +28,31 @@ namespace Osint_WPF.ViewModel
             if (userData == null) return "User data is null.";
             if (!userData.DehashedChecked) return "Dehashed search not enabled.";
 
-            var taskResultsWithTitles = BuildDehashedTasksWithTitles(userData);
-            var results = await Task.WhenAll(taskResultsWithTitles);
+            var taskResultsWithTitles = BuildDehashedTasksWithTitles(userData).ToList();
+
+            List<TaskResultWithTitle> results = new List<TaskResultWithTitle>();
+
+            // timer and counter to limit API calls so to not cross its limit 5 per 1s
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            int requestCount = 0;
+
+            foreach (var task in taskResultsWithTitles)
+            {
+                if (requestCount == 5)
+                {
+                    if (stopwatch.ElapsedMilliseconds < 1000)
+                    {
+                        await Task.Delay(1000 - (int)stopwatch.ElapsedMilliseconds);
+                    }
+                    stopwatch.Restart();
+                    requestCount = 0;
+                }
+
+                TaskResultWithTitle taskResult = await task;
+                results.Add(taskResult);
+                requestCount++;
+            }
 
             Entries.Clear();
             FormattedEntries.Clear();

@@ -11,6 +11,9 @@ namespace Osint_WPF.Model
 {
     public class Dehashed
     {
+        //https://www.dehashed.com/docs
+        // up to 5 request a sec, meaning requests not more often than 200ms each
+
         private const string BaseUrl = "https://api.dehashed.com/search";
         private readonly HttpClient client = new HttpClient();
 
@@ -29,19 +32,50 @@ namespace Osint_WPF.Model
             try
             {
                 HttpResponseMessage response = await client.GetAsync(url);
-                if (response.IsSuccessStatusCode)
+
+                switch (response.StatusCode)
                 {
-                    string content = await response.Content.ReadAsStringAsync();
-                    var dehashedResponse = JsonSerializer.Deserialize<DehashedResponse>(content);
-                    if (dehashedResponse?.Entries != null && dehashedResponse.Entries.Any())
-                    {
-                        return dehashedResponse.Entries;
-                    }
+                    case System.Net.HttpStatusCode.OK:
+                        string content = await response.Content.ReadAsStringAsync();
+                        var dehashedResponse = JsonSerializer.Deserialize<DehashedResponse>(content);
+                        if (dehashedResponse?.Entries != null && dehashedResponse.Entries.Any())
+                        {
+                            return dehashedResponse.Entries;
+                        }
+                        break;
+
+                    case System.Net.HttpStatusCode.Unauthorized:
+                        MessageBox.Show("Unauthorized: Check your API username and API key.");
+                        break;
+
+                    case System.Net.HttpStatusCode.Forbidden:
+                        MessageBox.Show("Forbidden: You do not have access to the requested resource.");
+                        break;
+
+                    case System.Net.HttpStatusCode.TooManyRequests:
+                        MessageBox.Show("Rate limit exceeded: You have made too many requests in a short period.");
+                        break;
+
+                    case System.Net.HttpStatusCode.InternalServerError:
+                        MessageBox.Show("Internal Server Error: The server encountered an unexpected condition.");
+                        break;
+
+                    case System.Net.HttpStatusCode.ServiceUnavailable:
+                        MessageBox.Show("Service Unavailable: The server is currently unable to handle the request due to temporary overloading or maintenance.");
+                        break;
+
+                    default:
+                        MessageBox.Show($"An unexpected error occurred: {response.StatusCode}");
+                        break;
                 }
             }
             catch (HttpRequestException e)
             {
-                throw;
+                MessageBox.Show($"HttpRequestException: {e.Message}");
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"An error occurred: {e.Message}");
             }
             return entries;
         }
@@ -92,11 +126,6 @@ namespace Osint_WPF.Model
 
             [JsonPropertyName("database_name")]
             public string Database_name { get; set; }
-
-            public override string ToString()
-            {
-                return $"Id: {Id}, Email: {Email}, Ip_address: {Ip_address}, Username: {Username},Password: {Password}, Hashed_password: {Hashed_password}, Hash_type: {Hash_type}, Name: {Name}, Vin: {Vin}, Address: {Address},Phone: {Phone}, Database_name: {Database_name}";
-            }
         }
     }
 }
