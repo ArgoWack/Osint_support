@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Input;
 using System.Windows;
-
+using dotenv.net;
+using System.Diagnostics;
 namespace Osint_WPF.ViewModels
 {
     public class UpdateKeysViewModel : ViewModelBase
@@ -83,16 +84,30 @@ namespace Osint_WPF.ViewModels
                         }
                     }
                     File.WriteAllLines(envFilePath, lines);
+
+                    // restart is required for .env file to update during the same sesion
+                    RestartApplication();
                 }
                 else
                 {
-                    // if .env couldn't be found
+                    throw new ApplicationException(".env file is missing");
                 }
             }
             catch (Exception ex)
             {
-                //if permission or other problems
+                throw new ApplicationException("Unexpected error while rewriting keys",ex);
             }
+        }
+        private void RestartApplication()
+        {
+            // main menu path
+            var exePath = Process.GetCurrentProcess().MainModule.FileName;
+
+            // starts new instance of app
+            Process.Start(exePath);
+
+            // closes the old one with old .env
+            Application.Current.Shutdown();
         }
     }
 }
