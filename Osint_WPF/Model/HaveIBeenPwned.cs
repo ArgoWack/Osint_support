@@ -55,23 +55,35 @@ namespace Osint_WPF.Model
                 // sends GET request to API
                 var response = await client.GetAsync(url);
 
-                if (response.IsSuccessStatusCode)
+                switch (response.StatusCode)
                 {
-                    List<Breach> breachDataList = new List<Breach>();
+                    case System.Net.HttpStatusCode.OK:
+                        List<Breach> breachDataList = new List<Breach>();
 
-                    var content = await response.Content.ReadAsStringAsync();
-                    var breaches = JsonSerializer.Deserialize<List<Breach>>(content);
+                        var content = await response.Content.ReadAsStringAsync();
+                        var breaches = JsonSerializer.Deserialize<List<Breach>>(content);
 
-                    if (breaches != null)
-                    {
-                        breachDataList.AddRange(breaches);
-                        breachDataList = breaches.OrderByDescending(b => b.BreachDate).ToList();
-                    }
-                    return breachDataList ?? new List<Breach>();
-                }
-                else
-                {
-                    throw new HttpRequestException($"Request failed with status code: {response.StatusCode}");
+                        if (breaches != null)
+                        {
+                            breachDataList.AddRange(breaches);
+                            breachDataList = breaches.OrderByDescending(b => b.BreachDate).ToList();
+                        }
+                        return breachDataList ?? new List<Breach>();
+
+                    case System.Net.HttpStatusCode.NotFound:
+                        return new List<Breach>(); // No breaches found.
+
+                    case System.Net.HttpStatusCode.Unauthorized:
+                        throw new ApplicationException("Unauthorized: API key is invalid.");
+
+                    case System.Net.HttpStatusCode.Forbidden:
+                        throw new ApplicationException("Forbidden: No user agent specified or API key is missing/not valid.");
+
+                    case System.Net.HttpStatusCode.TooManyRequests:
+                        throw new ApplicationException("Rate limit exceeded. Please try again later.");
+
+                    default:
+                        throw new HttpRequestException($"Request failed with status code: {response.StatusCode}");
                 }
             }
             catch (Exception ex)
@@ -86,23 +98,35 @@ namespace Osint_WPF.Model
                 var url = $"https://haveibeenpwned.com/api/v3/pasteaccount/{Uri.EscapeDataString(email)}";
                 var response = await client.GetAsync(url);
 
-                if (response.IsSuccessStatusCode)
+                switch (response.StatusCode)
                 {
-                    List<Paste> pasteDataList = new List<Paste>();
+                    case System.Net.HttpStatusCode.OK:
+                        List<Paste> pasteDataList = new List<Paste>();
 
-                    var content = await response.Content.ReadAsStringAsync();
-                    var pastes = JsonSerializer.Deserialize<List<Paste>>(content);
+                        var content = await response.Content.ReadAsStringAsync();
+                        var pastes = JsonSerializer.Deserialize<List<Paste>>(content);
 
-                    if (pastes != null)
-                    {
-                        pasteDataList.AddRange(pastes);
-                        pasteDataList = pastes.OrderByDescending(p => p.Date).ToList();
-                    }
-                return pasteDataList ?? new List<Paste>();
-                }
-                else
-                {
-                    throw new HttpRequestException($"Request failed with status code: {response.StatusCode}");
+                        if (pastes != null)
+                        {
+                            pasteDataList.AddRange(pastes);
+                            pasteDataList = pastes.OrderByDescending(p => p.Date).ToList();
+                        }
+                        return pasteDataList ?? new List<Paste>();
+
+                    case System.Net.HttpStatusCode.NotFound:
+                        return new List<Paste>(); // No Pastes found.
+
+                    case System.Net.HttpStatusCode.Unauthorized:
+                        throw new ApplicationException("Unauthorized: API key is invalid.");
+
+                    case System.Net.HttpStatusCode.Forbidden:
+                        throw new ApplicationException("Forbidden: No user agent specified or API key is missing/not valid.");
+
+                    case System.Net.HttpStatusCode.TooManyRequests:
+                        throw new ApplicationException("Rate limit exceeded. Please try again later.");
+
+                    default:
+                        throw new HttpRequestException($"Request failed with status code: {response.StatusCode}");
                 }
             }
             catch (Exception ex)
