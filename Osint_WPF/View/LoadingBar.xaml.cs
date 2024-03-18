@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace Osint_WPF.View
 {
-    /// <summary>
-    /// Logika interakcji dla klasy LoadingBar.xaml
-    /// </summary>
     public partial class LoadingBar : Window
     {
         public LoadingBar()

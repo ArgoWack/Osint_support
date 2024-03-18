@@ -11,12 +11,12 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Navigation;
 
 namespace Osint_WPF
 {
-    /// <summary>
-    /// Logika interakcji dla klasy BrowseDataOnOtherManualSearches.xaml
-    /// </summary>
     public partial class BrowseDataOnOtherManualSearches : Window
     {
         public BrowseDataOnOtherManualSearches()
@@ -29,6 +29,16 @@ namespace Osint_WPF
             var UpdateKeys = new MainWindow();
             UpdateKeys.Show();
             this.Close();
+        }
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            //opens hyperlink in browser
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = e.Uri.AbsoluteUri,
+                UseShellExecute = true
+            });
+            e.Handled = true;
         }
     }
 }

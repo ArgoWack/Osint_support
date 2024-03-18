@@ -18,9 +18,6 @@ using static Osint_WPF.BeginDataSearch;
 
 namespace Osint_WPF
 {
-    /// <summary>
-    /// Logika interakcji dla klasy BeginDataSearch.xaml
-    /// </summary>
     public partial class BeginDataSearch : Window
     {
         public BeginDataSearch()
@@ -203,8 +200,6 @@ namespace Osint_WPF
 
             public static async Task<string> CheckBreachesAsync(UserData userData)
             {
-                //potentialy add Lock and threading instead of hard Thread.Sleep?
-
                 //installed NuGet packed to be able to load sensitive data from .env file
                 DotEnv.Load();
 

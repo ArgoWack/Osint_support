@@ -15,33 +15,68 @@
                 BorderThickness="5" 
                 Padding="10"
                 CornerRadius="8,8,0,8">
-            
-            <Grid VerticalAlignment="Stretch" Background="{StaticResource MenuBackgroundColor}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
 
-            <Label Grid.Row="0"
-               Content="BrowseDataOnOtherManualSearches"
-               Background="{StaticResource MenuBackgroundColor}"
-               FontWeight="ExtraBold"
-               FontSize="30"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center">
-            </Label>
+            <Grid Background="{StaticResource MenuBackgroundColor}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="80"/>
+                </Grid.RowDefinitions>
 
-            <Button Grid.Row="7"
-                Content="Return"
-                Background="{StaticResource MenuBackgroundColor}"
-                FontWeight="Bold"
-                FontStyle="Italic"
-                FontSize="20"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch" Click="Button_Click_3">
-            </Button>
-        </Grid>
+                <Label Grid.Row="0"
+                       Content="Other Manual Searches"
+                       Background="{StaticResource MenuBackgroundColor}"
+                       FontWeight="ExtraBold"
+                       FontSize="30"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+
+                <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    
+                    <TextBlock FontWeight="Bold" FontSize="25" Margin="5">Osint Frameworks:</TextBlock>
+                    <TextBlock Margin="5" FontSize="16">
+                        <Hyperlink NavigateUri="https://osintframework.com" RequestNavigate="Hyperlink_RequestNavigate">www.osintframework.com</Hyperlink>
+                    </TextBlock>
+
+                    <TextBlock FontWeight="Bold" FontSize="25" Margin="5">Social media agregator:</TextBlock>
+                    <TextBlock Margin="5" FontSize="16">
+                        <Hyperlink NavigateUri="https://www.huntintel.io" RequestNavigate="Hyperlink_RequestNavigate">www.huntintel.io</Hyperlink>
+                    </TextBlock>
+
+                    <TextBlock FontWeight="Bold" FontSize="25" Margin="5">Network traffic analysis:</TextBlock>
+                    <TextBlock Margin="5" FontSize="16">
+                        <Hyperlink NavigateUri="https://www.shodan.io" RequestNavigate="Hyperlink_RequestNavigate">www.shodan.io</Hyperlink>
+                    </TextBlock>
+                    <TextBlock Margin="5" FontSize="16">
+                        <Hyperlink NavigateUri="https://search.censys.io" RequestNavigate="Hyperlink_RequestNavigate">www.search.censys.io</Hyperlink>
+                    </TextBlock>
+                    <TextBlock Margin="5" FontSize="16">
+                        <Hyperlink NavigateUri="https://www.zoomeye.org" RequestNavigate="Hyperlink_RequestNavigate">www.zoomeye.org</Hyperlink>
+                    </TextBlock>
+
+                    <TextBlock FontWeight="Bold" FontSize="25" Margin="5">Open webcams/maps:</TextBlock>
+                    <TextBlock Margin="5" FontSize="16">
+                        <Hyperlink NavigateUri="www.mapillary.com" RequestNavigate="Hyperlink_RequestNavigate">www.mapillary.com</Hyperlink>
+                    </TextBlock>
+                    <TextBlock Margin="5" FontSize="16">
+                        <Hyperlink NavigateUri="www.insecam.org" RequestNavigate="Hyperlink_RequestNavigate">www.insecam.org</Hyperlink>
+                    </TextBlock>
+                    <TextBlock Margin="5" FontSize="16">
+                        <Hyperlink NavigateUri="www.webcamtaxi.com" RequestNavigate="Hyperlink_RequestNavigate">www.webcamtaxi.com</Hyperlink>
+                    </TextBlock>
+                </StackPanel>
+
+                <Button Grid.Row="2"
+                        Content="Return"
+                        Background="{StaticResource MenuBackgroundColor}"
+                        FontWeight="Bold"
+                        FontStyle="Italic"
+                        FontSize="20"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Margin="5"
+                        Click="Button_Click_3"/>
+            </Grid>
         </Border>
     </ScrollViewer>
-
 </Window>

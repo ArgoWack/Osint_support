@@ -20,9 +20,6 @@ using PdfSharp.Pdf;
 
 namespace Osint_WPF.View
 {
-    /// <summary>
-    /// Logika interakcji dla klasy SearchResults.xaml
-    /// </summary>
     public partial class SearchResults : Window
     {
         private string _resultsText;
@@ -51,7 +48,7 @@ namespace Osint_WPF.View
         {
             //save to pdf
 
-            // creates a new MigraDoc document
+            // creates a new MigraDoc document (using nuget)
             var document = new MigraDoc.DocumentObjectModel.Document();
             var section = document.AddSection();
             var paragraph = section.AddParagraph();

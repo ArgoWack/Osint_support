@@ -16,9 +16,6 @@ using Osint_WPF.ViewModels;
 
 namespace Osint_WPF
 {
-    /// <summary>
-    /// Logika interakcji dla klasy UpdateKeys.xaml
-    /// </summary>
     public partial class UpdateKeys : Window
     {
         public UpdateKeys()
